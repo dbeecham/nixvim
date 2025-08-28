@@ -1,0 +1,75 @@
+snippet terraform "required_providers" b
+	terraform {
+		required_providers {
+			cloudflare = {
+				source = "cloudflare/cloudflare"
+			}
+			aws = {
+				source = "hashicorp/aws"
+			}
+		}
+	}
+snippet variable "variable ..." b
+	variable "${1:prod_aws_access_key}" {
+		type = string
+		sensitive = true
+		# default = ""
+		# description = ""
+	}
+snippet aws "provider aws" b
+	provider "aws" {
+		alias = "nukaworld"
+		region = var.nukaworld_aws_region
+		access_key = var.nukaworld_aws_access_key
+		secret_key = var.nukaworld_aws_secret_key
+	}
+snippet cloudflare "cloudflare snippets" b
+	# snippets for cloudflare:
+	# - cloudflarep    : cloudflare provider
+	# - cloudflarea    : cloudflare A record
+	# - cloudflareaaaa : cloudflare AAAA record
+	# - cloudflaremx   : cloudflare MX record
+	# - cloudflaretxt  : cloudflare TXT record
+snippet cloudflarep "provider cloudflare" b
+	provider "cloudflare" {
+		email = var.cloudflare_email
+		api_key = var.cloudflare_api_key
+	}
+snippet cloudflaremx "cloudflare MX record" b
+	resource "cloudflare_record" "${1:mx_lunix_se}" {
+		zone_id = data.cloudflare_zone.${2:lunix}.id
+		name = "@"
+		type = "MX"
+		priority = ${3:1}
+		value = "${4:aspmx.l.google.com}"
+	}
+	${0}
+snippet cloudflarea "cloudflare A record" b
+	resource "cloudflare_record" "${1:florp}" {
+		zone_id = data.cloudflare_zone.${2:lunix}.id
+		name = "${3:florp}"
+		value = ${4:aws_instance.florp.public_ip}
+		type = "A"
+		ttl = ${5:3600}
+		proxied = ${6:false}
+	}
+	${0}
+snippet cloudflareaaaa "cloudflare AAAA record" b
+	resource "cloudflare_record" "${1:florp6}" {
+		zone_id = data.cloudflare_zone.${2:lunix}.id
+		name = "${3:florp}"
+		value = ${4:aws_instance.florp.ipv6_addresses[0]}
+		type = "AAAA"
+		ttl = ${5:3600}
+		proxied = ${6:false}
+	}
+	${0}
+snippet cloudflaretxt "cloudflare TXT record" b
+	resource "cloudflare_record" "${1:kexec_nixos}" {
+		zone_id = data.cloudflare_zone.${2:lunix}.id
+		name = "${3:kexec.nixos.}"
+		value = "${4:hello}"
+		type = "TXT"
+		ttl = 3600
+	}
+	${0}

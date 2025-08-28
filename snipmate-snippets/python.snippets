@@ -1,0 +1,82 @@
+snippet snippets "list of snippets" b
+	# - main
+	# - f (func)
+	# - class
+	# - v (variable assignment)
+	#
+	# Types:
+	#  - alias (type alias)
+	#  - typing (import typing stuff)
+	#  - tuple
+	#  - either (import)
+	#  - toolz (import)
+	#  - ifnothing (if is nothing)
+snippet class "class ..." b
+	class ${1:GPS}(${2:object}):
+		def __init__(self${4}) -> None:
+			raise NotImplementedError	
+	${0}
+snippet f "def func()" b
+	def ${1:func}(${2:i: int}):
+		${0}
+snippet main "main()" b
+	def main() -> None:
+		${0}
+	
+	if __name__ == "__main__":
+		main()
+snippet alias "type alias" b
+	${1:AliasType}: TypeAliase = ${2:Callable[[int],Callable[[timedelta,float,float],Tuple[float,float]]]}
+	${0}
+snippet c "class instance" b
+	${1:gps}: ${2:GPS}
+	$1 = $2(${3:...})
+	${0}
+snippet v "variable" b
+	${1:v}: float
+	$1 = 3.14
+	${0}
+snippet either
+	from either import Either, Right, Left, Maybe, Just, Nothing
+	${0}
+snippet typing
+	from typing import Optional, Callable, List, Sequence, TypeVar, Union, Dict, Any, NamedTuple
+snippet Callable
+	Callable[[${1:int}],${2:int}]
+snippet tuple
+	tuple[{$1:float},${2:float}]
+	${0}
+snippet Either
+	Either[${1:Exception},${2:Unit}]
+	${0}
+snippet ifnothing
+	if ${1:variable}.is_nothing():
+		${2:# log, return...}
+	else:
+		${0}
+snippet toolz "import itertools" b
+	import itertools
+	from toolz import curry, pipe, count, last, complement, compose # type: ignore
+	from toolz.curried import map # type: ignore
+	from toolz.curried.operator import add # type: ignore
+
+	dropwhile = curry(itertools.dropwhile)
+	takewhile = curry(itertools.takewhile)
+snippet pipe "pipe()" b
+	${1:rise_position_m} = pipe(
+
+		# Calculate the trajectory of the sun model we've calculated
+		# to be optimal.
+		trajectory(sun_with_offset(sun_azi_offset_turns)),
+
+		# Remove all steps which is outside the unit domain
+		dropWhile(outside_unit_domain),
+
+		# Take the first one
+		first
+snippet step "state machine step" b
+	def ${1:step}(${2:self}): -> Callable[[${3:float,float,float}],Either[Exception,Unit]]:
+		${0}
+snippet lambda "a -> b -> c" b
+	${1:inside_unit_domaon}: Callable[${2:[tuple[float,float]]}, ${3:bool}]
+	$1 = lambda s: ${0}

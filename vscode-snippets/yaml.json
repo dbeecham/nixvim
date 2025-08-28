@@ -1,0 +1,11 @@
+{
+    "cmd": {
+        "prefix": ["cmd"],
+        "body": [
+            "- name: ${1}",
+            "  command: ${2}",
+            "  register: ret",
+            "${0}"
+        ]
+    }
+}

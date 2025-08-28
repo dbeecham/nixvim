@@ -1,0 +1,230 @@
+snippet fqdn "Ensure target is FQDN" b
+	- name: Ensure target iCPU hostname is it's FQDN (name.${1:example.com})
+	  set_fact:
+	  	inventory_hostname: "{{ inventory_hostname }}.$1"
+	  when: not inventory_hostname.endswith('.$1')
+	${0}
+snippet uri "ansible.builtin.uri" b
+	- name: ${1}
+	  ansible.builtin.uri:
+	  	url: "${2:https://example.com/}"
+	  	method: ${3:GET}
+	  	force_basic_auth: false
+	  	status_code: 200
+	  	return_content: ${4:true}
+	  	headers:
+	  		Accept: "application/json"
+	  changed_when: false
+	  register: ret
+	  delegate_to: localhost
+	  until: ret.status == 200
+	  retries: 5
+	  delay: 1
+	${0}
+snippet clustermw-node "Get node info from clustermw" b
+	- name: ${1}
+	  ansible.builtin.uri:
+	  	url: "https://{{ clustermw_host }}/nodes/{{ inventory_hostname }}"
+	  	method: ${2:GET}
+	  	force_basic_auth: false
+	  	status_code: 200
+	  	return_content: ${3:true}
+	  	headers:
+	  		Accept: "application/json"
+	  changed_when: false
+	  register: ret
+	  check_mode: false
+	  delegate_to: localhost
+	  until: ret.status == 200 or ret.status == 404
+	  failed_when: ret.status != 200
+	  retries: 5
+	  delay: 1
+	
+	- name: Get cluster name
+	  set_fact:
+	  	cacheable: true
+	  	cluster_name: "{{ ret.json['cluster'] }}"
+
+	- name: Fail if cluster name does not exist
+	  fail:
+	  	msg: This node is not part of a cluster
+	  when: cluster_name | length > 0
+	${0}
+snippet hostvars "write hostvars to file" b
+	- name: Write hostvars to file
+	  hosts: localhost
+	  gather_facts: false
+	  strategy: linear
+	  tasks:
+	    - name: Write hostvars to file
+	      ansible.builtin.copy:
+	        content: "{{ hostvars | to_nice_json }}"
+	        dest: "facts1.json"
+	${0}
+snippet ansible-facts-save "write state to file" b
+	- name: Store facts to a file
+	  hosts: ${1:targets}
+	  gather_facts: false
+	  tasks:
+
+		- name: Ensure that the "${2:project}" state directory exists
+		  ansible.builtin.file:
+			path: /var/lib/$2
+			state: directory
+			mode: 0700
+
+		- name: Serialize and write state object to file
+		  ansible.builtin.copy:
+			content: "{{ ansible_facts | to_nice_json }}"
+			dest: /var/lib/$2/facts.json
+			mode: 0600
+	${0}
+snippet ansible-facts-read "load facts from fact storage" b
+	- name: Load facts from fact storage
+	  hosts: ${1:targets}
+	  gather_facts: false
+	  tasks:
+		- name: Slurp the facts file
+		  ansible.builtin.slurp:
+			src: /var/lib/${2:project}/facts.json
+		  register: ret
+		  when:
+			- cluster is not defined or
+			  foo is not defined
+
+		- name: Merge the slurped facts with existing facts
+		  set_fact:
+			foo: "{{ slurp_facts.foo }}"
+			bar: "{{ slurp_facts.bar }}"
+		  vars:
+			slurp_facts: "{{ ret.content | b64decode | from_json }}"
+		  when:
+			- ret is not skipped
+	${0}
+snippet assert "assert" b
+	- name: ${1:...}
+	  assert:
+	    # note that this does not need citation marks
+	    that: ${2:foo is defined}
+	    that:
+	      - foo is defined
+	      - foo.bar is defined
+	    fail_msg: {3:}
+	    quiet: true
+	    success_msg: {4:}
+	${0}
+snippet fail "fail" b
+	- name: ${1:...}
+	  fail:
+	    msg: ${2:}
+	  when:
+	    - ${3:ret it not skipped}
+	${0}
+snippet bail "bail" b
+	- name: Bailing.
+	  fail:
+	    msg: ${1}
+	${0}
+snippet delegate "delegate_to" b
+	delegate_to: ${1}
+	${0}
+snippet hosts "hosts" b
+	hosts: ${1:targets}
+	${0}
+snippet strategy "strategy: X" b
+	// use 'free', 'linear', or 'singular'
+snippet free "strategy: free" b
+	strategy: free
+	${0}
+snippet linear "strategy: linear" b
+	strategy: linear
+	${0}
+snippet singular "strategy: linear & serial: 1" b
+	strategy: linear
+	serial: 1
+	${0}
+snippet fact "set_fact" b
+	- name: ${1}
+	  set_fact:
+	  	cacheable: true
+	  	${2:foo}: ${3:bar}
+	  when:
+	  	- ${4:ret is not skipped}
+	${0}
+snippet name "name:" b
+	name: ${0}
+snippet gather "gather_facts: no" b
+	gather_facts: no
+	${0}
+snippet serial "serial: 1" b
+	serial: 1
+	${0}
+snippet register "registe: ret" b
+	register: ret
+	${0}
+snippet tasks "tasks:" b
+	tasks:
+
+		${0}
+snippet changed "changed_when: false" b
+	changed_when: false
+	${0}
+snippet addhost "add_host:" b
+	- add_host:
+	    name: "${1:\{\{ item \}\}}"
+	    groups: ${2:infongs}
+	    ansible_port: ${3:22}
+	    ${4:cluster}: ${5}
+	  loop: ${6:icpus}
+	  changed_when: false
+	${0}
+snippet pause "pause:" b
+	ansible.builtin.pause:
+	  prompt: |
+	  	${1}
+	  register: ret
+	  when:
+	    - not ansible_noninteractive
+	    - not ansible_check_mode
+	${0}
+snippet playbook "playbook" b
+	- name: ${1}
+	  hosts: ${2}
+	  gather_facts: false
+	  strategy: free
+	  tasks:
+	    ${0}
+snippet debug "debug msg" b
+	- debug:
+	    msg: ${0}
+snippet hostn "inventory_hostname" w
+	inventory_hostname${0}
+snippet script "script: " b
+	- name: ${1}
+	  script: ${2:script.sh}
+	${0}
+snippet wait_for_connection "wait_for_connection" b
+	- name: ${1:Wait for connection}
+	  wait_for_connection:
+	    timeout: ${2:30}
+	${0}
+snippet end "meta: end_host" b
+	- name: ${1}
+	  meta: end_host
+	  when: ${2}
+	${0}
+snippet rocket.chat "rocket.chat message" b
+	- name: "rocket.chat: ${1}"
+	  delegate_to: localhost
+	  uri:
+	    url: "{{ rocketchat_api_shl }}/{{ rocketchat_token_shl }}?alias=shl-team&emoji=:rotating_light:"
+	    method: POST
+	    headers:
+	      Content-Type: "application/json"
+	    body_format: json
+	    body:
+	      text: "Datacenter switch | @{{ awx_user_name }} *{{ infong_name | replace('.schlund.de', '') }}* cannot be switched because there is migration ongoing \n [{{ infong_name | replace('.schlund.de', '') }} switch awx job](https://shl-awx.server.lan/#/jobs/playbook/{{ awx_job_id }}/output)"
+	  when:
+	    - awx_user_name is defined
+	    - awx_job_id is defined
+	${0}

@@ -1,0 +1,68 @@
+snippet inputs "flake inputs" b
+	inputs = {
+		${0}
+	};
+snippet outputs "flake outputs" b
+	outputs = inputs@{ self, ... }: {
+
+		inherit inputs;
+
+		${0}
+	};
+snippet package "default package" b
+	packages.x86_64-linux.default = 
+snippet github "github input" b
+	${1:nixpkgs} = {
+		type = "github";
+		owner = "${2:NixOS}";
+		repo = "${3:nixpkgs}";
+		rev = "${4}";
+		flake = ${5:true};
+	};
+
+	${0}
+snippet age.secret "age secret create" b
+	age.secrets."${1:etcd.key}" = {
+		file = ${2:./pki/etcd.key.florp.age};
+		owner = ${3:config.users.users.root.name};
+		# path = "{config.users.users.dbe.home}/.netrc";
+		# group = "root";
+		# mode = "600";
+	};
+	${0}
+snippet age.key "age secret reference"
+	age.secrets."${1:etcd.key}".path${0}
+snippet systemd.service "systemd service" b
+	systemd.services.${1:etcd} = {
+		wantedBy = [ "multi-user.target" ];
+		after = [ "network-pre.target" "tailscale.service" ];
+		requires = [ "network-pre.target" "tailscale.service" ];
+
+		serviceConfig = {
+			Type = "exec";
+			Restart = "always";
+			RestartSec = "2sec";
+			ExecStart = ''
+				blah
+			'';
+		};
+	};
+snippet tmpfiles "create directory" b
+	systemd.tmpfiles.rules = [
+		"d ${1:/storage/postgres} ${2:0770} ${3:user} ${4:group} -"
+	];
+	${0}
+snippet bind "bind mount" b
+	systemd.mounts = [
+		{
+			enable = true;
+			what = "${1:/mnt/vg0/lv0/postgres}";
+			where = "${2:/storage/postgres}";
+			type = "none";
+			options = "bind";
+			unitConfig.DefaultDependencies = false;
+			before = [ "umount.target" ];
+			conflicts = [ "umount.target" ];
+		}
+	];
+	${0}

@@ -1,0 +1,59 @@
+snippet #! "shebang" b
+	#!/usr/bin/env bash
+
+	# exit if a command fails instead of resuming on the next line
+	# use "command || true" or "command || :" to suppress.
+	set -e
+
+	# treat unset variable references as an error
+	set -u
+
+	# prevent errors in pipelines from being masked
+	set -o pipefail
+
+	${0}
+snippet ifs "IFS=\n\t" b
+	# change field separator to newlines or tabs
+	IFS=$'\n\t'
+snippet main "main()" b
+	main() {
+		${0}
+	}
+
+	main "$@"
+snippet f "func()" b
+	${1:foo}() {
+		${0}
+	}
+snippet for "for .. in" b
+	for ${1:name} in "${2:\$\{names[@]\}}"; do
+		${0}
+	done
+snippet trap "trap func EXIT" b
+	function ${1:cleanup} {
+		${2:rm file || true}
+	}
+	trap $1 EXIT
+	${0}
+snippet usage "usage(){ ... }" b
+	usage() {
+		cat >&2 <<- EOF
+			
+			$(tput bold)USAGE$(tput sgr0)
+			  $ ${0##*/} <icpu> [cmd...]
+
+
+			$(tput bold)DESCRIPTION$(tput sgr0)
+			  Connect to the iDRAC interface of the given iCPU.
+
+
+			$(tput bold)EXAMPLES$(tput sgr0)
+			  Connect to the iDRAC interface on icpu-test-bs03
+			  $ ${0##*/} icpu-test-bs08
+
+			  Read the job queue on icpu-test-bap03
+			  $ ${0##*/} icpu-test-bap03.schlund.de racadm jobqueue view
+
+		EOF
+		exit 1
+	}
