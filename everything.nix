@@ -956,7 +956,7 @@ programs.nixvim = {
           {
             group = "view";
             event = [ "CursorHold" "CursorHoldI" ];
-            pattern = [ "*.nix" "*.c" "*.yaml" "*.md" "*.py" "*.css" "*.html" "*.js" "*.lua" ];
+            pattern = [ "*.nix" "*.c" "*.yaml" "*.yml" "*.md" "*.py" "*.css" "*.html" "*.js" "*.lua" ];
             command = "if &buftype == '' | silent! mkview | endif";
           }
 
@@ -964,7 +964,7 @@ programs.nixvim = {
           {
             group = "view";
             event = [ "BufWinLeave" "FocusLost" "VimLeavePre" ];
-            pattern = [ "*.nix" "*.c" "*.yaml" "*.md" "*.py" "*.css" "*.html" "*.js" "*.lua" ];
+            pattern = [ "*.nix" "*.c" "*.yaml" "*.yml" "*.md" "*.py" "*.css" "*.html" "*.js" "*.lua" ];
             command = "if &buftype == '' | silent! mkview | endif";
           }
 
