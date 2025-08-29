@@ -1,5 +1,5 @@
-{ pkgs, lib, ... }:
-with { inherit (lib.nixvim) mkRaw; };
+{ pkgs, config, ... }:
+with { inherit (config.lib.nixvim) mkRaw; };
 {
 
 programs.nixvim = {
@@ -712,6 +712,8 @@ programs.nixvim = {
         keymaps = [
           { mode = [ "v" "n" ]; key = "J"; action = "5j"; }
           { mode = [ "v" "n" ]; key = "K"; action = "5k"; }
+          { mode = "n"; key = "å"; action = "["; }
+          { mode = "n"; key = "¨"; action = "]"; }
           { mode = "n"; key = "-"; action = "/"; options.noremap = false; }
           { mode = "i"; key = "<c-a>"; action = "<home>"; }
           { mode = "i"; key = "<c-e>"; action = "<end>"; }
@@ -767,7 +769,21 @@ programs.nixvim = {
 
           {
             mode = "i";
-            key = "";
+            key = "<F3>";
+            action = config.lib.nixvim.mkRaw ''
+              function()
+                if require('copilot.suggestion').is_visible() then
+                  require('copilot.suggestion').accept()
+                end
+              end
+            '';
+            options.silent = true;
+            options.desc = "Accept Copilot suggestion";
+          }
+
+          {
+            mode = "i";
+            key = "<F13>";
             action = config.lib.nixvim.mkRaw ''
               function()
                 if require('copilot.suggestion').is_visible() then
@@ -997,7 +1013,5 @@ programs.nixvim = {
 
       };
 
-
-};
 
 }
