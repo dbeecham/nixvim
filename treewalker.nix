@@ -1,59 +1,60 @@
-{ config, pkgs, ... }: {
-  programs.nixvim.extraPlugins = [
+{ lib, pkgs, ... }: {
+
+  extraPlugins = [
     pkgs.vimPlugins.treewalker-nvim
   ];
 
-  programs.nixvim.extraConfigLuaPre = ''
+  extraConfigLuaPre = ''
     require('treewalker').setup();
     vim.g.treewalker = require('treewalker');
   '';
 
-  programs.nixvim.keymaps = [
+  keymaps = [
 
     { 
       mode = "n"; key = "<C-h>";
-      action = config.lib.nixvim.mkRaw "vim.g.treewalker.move_out";
+      action = lib.nixvim.mkRaw "vim.g.treewalker.move_out";
       options.silent = true;
     }
     { 
       mode = "n"; key = "˛";
-      action = config.lib.nixvim.mkRaw "vim.g.treewalker.move_out";
+      action = lib.nixvim.mkRaw "vim.g.treewalker.move_out";
       options.silent = true;
     }
 
 
     { 
       mode = "n"; key = "<C-j>"; 
-      action = config.lib.nixvim.mkRaw "vim.g.treewalker.move_down";
+      action = lib.nixvim.mkRaw "vim.g.treewalker.move_down";
       options.silent = true;
     }
     { 
       mode = "n"; key = "√"; 
-      action = config.lib.nixvim.mkRaw "vim.g.treewalker.move_down";
+      action = lib.nixvim.mkRaw "vim.g.treewalker.move_down";
       options.silent = true;
     }
 
 
     { 
       mode = "n"; key = "<C-k>"; 
-      action = config.lib.nixvim.mkRaw "vim.g.treewalker.move_up";
+      action = lib.nixvim.mkRaw "vim.g.treewalker.move_up";
       options.silent = true;
     }
     { 
       mode = "n"; key = "ª"; 
-      action = config.lib.nixvim.mkRaw "vim.g.treewalker.move_up";
+      action = lib.nixvim.mkRaw "vim.g.treewalker.move_up";
       options.silent = true;
     }
 
 
     { 
       mode = "n"; key = "<C-l>"; 
-      action = config.lib.nixvim.mkRaw "vim.g.treewalker.move_in";
+      action = lib.nixvim.mkRaw "vim.g.treewalker.move_in";
       options.silent = true;
     }
     { 
       mode = "n"; key = "ﬁ"; 
-      action = config.lib.nixvim.mkRaw "vim.g.treewalker.move_in";
+      action = lib.nixvim.mkRaw "vim.g.treewalker.move_in";
       options.silent = true;
     }
 

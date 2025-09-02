@@ -1,10 +1,8 @@
-{ pkgs, config, ... }:
-with { inherit (config.lib.nixvim) mkRaw; };
+{ pkgs, config, lib, ... }:
+with { inherit (lib.nixvim) mkRaw; };
 {
 
-programs.nixvim = {
-
-        enable = true;
+        #enable = true;
 
         impureRtp = true;
 
@@ -26,21 +24,26 @@ programs.nixvim = {
               max_size = 24;
             };
           };
+          settings.notifier = {
+            enabled = true;
+            style = "compact";
+          };
         };
 
+        # <https://github.com/MunifTanjim/nui.nvim ⭐️1.9k 💾0.6k>
         plugins.nui = { # required for noice & avante
           enable = true;
           lazyLoad.settings.enabled = "not vim.g.vscode";
         };
 
-        plugins.notify = { # Extra optional for noice
-          enable = true;
-          lazyLoad.settings.enabled = "not vim.g.vscode";
-          settings = {
-            stages = "fade";
-            timeout = 1000;
-          };
-        };
+        # plugins.notify = { # Extra optional for noice
+        #   enable = true;
+        #   lazyLoad.settings.enabled = "not vim.g.vscode";
+        #   settings = {
+        #     stages = "fade";
+        #     timeout = 1000;
+        #   };
+        # };
 
         extraPlugins = [
 
@@ -78,59 +81,6 @@ programs.nixvim = {
         };
 
 
-        # <https://github.com/neovim/nvim-lspconfig ⭐️15.5k 💾3.7k>
-        plugins.lsp = {
-          enable = true;
-          autoLoad = true;
-          servers = {
-
-            # Python
-            pyright = {
-              enable = true;
-              autostart = true;
-            };
-
-            # so far, I've not been able to make ruff generate a single diagnostic.
-            pylsp = {
-              enable = true;
-              autostart = true;
-              settings = {
-                plugins = {
-                  #pylsp_mypy.enabled = true;
-                  ruff.enabled = true;
-                  flake8 = {
-                    enabled = true;
-                    maxLineLength = 110;
-                  };
-                };
-              };
-            };
-
-            # Nix
-            nixd.enable = true;
-            nil_ls.enable = true;
-
-            # CSS
-            tailwindcss.enable = true;
-            cssls = {
-              enable = true;
-              extraOptions.init_options.provideFormatter = false;
-            };
-
-            # JSON
-            jsonls.enable = true;
-
-            # Lua
-            lua_ls = {
-              enable = true;
-              settings = {
-                workspace = {
-                  library = [ (mkRaw "vim.env.VIMRUNTIME") ];
-                };
-              };
-            };
-          };
-        };
 
         # <https://github.com/nvim-treesitter/nvim-treesitter ⭐️12.4k 💾5.9k>
         plugins.treesitter = {
@@ -148,7 +98,7 @@ programs.nixvim = {
           modules = {
             diff = {
               # disabled by default?
-              source = config.lib.nixvim.mkRaw "require('mini.diff').gen_source.none()";
+              source = lib.nixvim.mkRaw "require('mini.diff').gen_source.none()";
             };
             icons = {
               style = "glyph";
@@ -193,22 +143,22 @@ programs.nixvim = {
               };
             };
             sections = {
-              lualine_a = config.lib.nixvim.mkRaw "{ { 'mode', separator = { left = '' }, padding = { left = 1, right = 1 } } }";
-              lualine_b = config.lib.nixvim.mkRaw "{ 'filename', 'diff' }";
-              lualine_c = config.lib.nixvim.mkRaw "{ '%=', }";
-              lualine_x = config.lib.nixvim.mkRaw "{}";
-              lualine_y = config.lib.nixvim.mkRaw "{}";
-              lualine_z = config.lib.nixvim.mkRaw "{}";
+              lualine_a = lib.nixvim.mkRaw "{ { 'mode', separator = { left = '' }, padding = { left = 1, right = 1 } } }";
+              lualine_b = lib.nixvim.mkRaw "{ 'filename', 'diff' }";
+              lualine_c = lib.nixvim.mkRaw "{ '%=', }";
+              lualine_x = lib.nixvim.mkRaw "{}";
+              lualine_y = lib.nixvim.mkRaw "{}";
+              lualine_z = lib.nixvim.mkRaw "{}";
             };
             inactive_sections = {
-              lualine_a = config.lib.nixvim.mkRaw "{ 'filename' }";
-              lualine_b = config.lib.nixvim.mkRaw "{}";
-              lualine_c = config.lib.nixvim.mkRaw "{}";
-              lualine_x = config.lib.nixvim.mkRaw "{}";
-              lualine_y = config.lib.nixvim.mkRaw "{}";
-              lualine_z = config.lib.nixvim.mkRaw "{}";
+              lualine_a = lib.nixvim.mkRaw "{ 'filename' }";
+              lualine_b = lib.nixvim.mkRaw "{}";
+              lualine_c = lib.nixvim.mkRaw "{}";
+              lualine_x = lib.nixvim.mkRaw "{}";
+              lualine_y = lib.nixvim.mkRaw "{}";
+              lualine_z = lib.nixvim.mkRaw "{}";
             };
-            tabline = config.lib.nixvim.mkRaw "{}";
+            tabline = lib.nixvim.mkRaw "{}";
           };
         };
 
@@ -259,8 +209,17 @@ programs.nixvim = {
             routes = [
               {
                 filter.event = "msg_show";
-                filter.any = [{ find = "Agent service not initialized"; } { find = "Authenticated as GitHub user"; } ];
+                filter.any = [
+                  { find = "Agent service not initialized"; }
+                  { find = "Authenticated as GitHub user"; } 
+                  { find = "fewer lines"; }
+                ];
                 opts.skip = true;
+              }
+              {
+                filter.event = "notify";
+                filter.title = "snip";
+                view = "mini";
               }
               {
                 filter = {
@@ -324,26 +283,26 @@ programs.nixvim = {
                 auto_show = true;
                 border = "rounded";
                 draw = {
-                  columns = config.lib.nixvim.mkRaw ''{
+                  columns = lib.nixvim.mkRaw ''{
                       { "label", "label_description", gap = 1 },
                       { "kind_icon", "kind" }
                   }'';
                   components = {
                     kind_icon = {
-                      text = config.lib.nixvim.mkRaw ''
+                      text = lib.nixvim.mkRaw ''
                         function(ctx)
                           local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
                           return ' ' .. kind_icon .. ctx.icon_gap .. ' '
                         end
                       '';
-                      highlight = config.lib.nixvim.mkRaw ''
+                      highlight = lib.nixvim.mkRaw ''
                         function(ctx)
                           local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
                           return hl
                         end
                       '';
                     };
-                    kind.highlight = config.lib.nixvim.mkRaw ''
+                    kind.highlight = lib.nixvim.mkRaw ''
                       function(ctx)
                         local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
                         return hl
@@ -385,14 +344,6 @@ programs.nixvim = {
         # <https://github.com/sindrets/diffview.nvim ⭐️4.8k 💾0.3k>
         plugins.diffview.enable = true;
 
-        # <https://github.com/L3MON4D3/LuaSnip ⭐️4.0k 💾2.3k>
-        plugins.luasnip = {
-          enable = true;
-          fromVscode = [ { paths = ./vscode-snippets; } { paths = "~/.config/nvim/vscode-snippets"; } ];
-          fromSnipmate = [ { paths = ./snipmate-snippets; } { paths = "~/.config/nvim/snipmate-snippets"; } ];
-          fromLua = [ { paths = ./luasnip-snippets; } { paths = "~/.config/nvim/luasnip-snippets"; } ];
-        };
-
         # <https://github.com/zbirenbaum/copilot.lua ⭐️3.6k 💾0.4k>
         # Login using `:Copilot auth`
         # Functions on copilot.suggestion:
@@ -426,10 +377,10 @@ programs.nixvim = {
         # <https://github.com/folke/flash.nvim ⭐️3.4k 💾0.5k>
         # flash.nvim: Navigate your code with search labels, enhanced character
         # motions and Treesitter integration
-        plugins.flash = {
-            enable = true;
-            settings.modes.search.enabled = true;
-        };
+        #plugins.flash = {
+        #    enable = true;
+        #    settings.modes.search.enabled = true;
+        #};
 
         # <https://github.com/nvim-treesitter/nvim-treesitter-context ⭐️2.9k 💾0.5k>
         # The 'treesitter-context' plugin is a plugin that shows the context of the
@@ -731,7 +682,7 @@ programs.nixvim = {
           { 
             mode = "i";
             key = "<Tab>";
-            action = config.lib.nixvim.mkRaw ''
+            action = lib.nixvim.mkRaw ''
               function()
 
                 if require('luasnip').expand_or_jumpable() then
@@ -754,7 +705,7 @@ programs.nixvim = {
           { 
             mode = "i";
             key = "<S-Tab>";
-            action = config.lib.nixvim.mkRaw ''
+            action = lib.nixvim.mkRaw ''
               function()
                 if require('blink-cmp').is_visible() then
                   require('blink-cmp').insert_prev()
@@ -770,7 +721,7 @@ programs.nixvim = {
           {
             mode = "i";
             key = "<F3>";
-            action = config.lib.nixvim.mkRaw ''
+            action = lib.nixvim.mkRaw ''
               function()
                 if require('copilot.suggestion').is_visible() then
                   require('copilot.suggestion').accept()
@@ -784,7 +735,7 @@ programs.nixvim = {
           {
             mode = "i";
             key = "<F13>";
-            action = config.lib.nixvim.mkRaw ''
+            action = lib.nixvim.mkRaw ''
               function()
                 if require('copilot.suggestion').is_visible() then
                   require('copilot.suggestion').accept()
@@ -879,13 +830,13 @@ programs.nixvim = {
           }
 
           # treesitter context
-          { mode = "n"; key = "<leader>ct"; action = config.lib.nixvim.mkRaw "require('treesitter-context').toggle"; options.silent = true; options.desc = "Toggle treesitter context"; }
+          { mode = "n"; key = "<leader>ct"; action = lib.nixvim.mkRaw "require('treesitter-context').toggle"; options.silent = true; options.desc = "Toggle treesitter context"; }
           # Use gF to "forcefully" edit the file under the cursor, creating it if
           # it doesn't exist.
           {
             mode = "n";
             key = "gF";
-            action = config.lib.nixvim.mkRaw ''
+            action = lib.nixvim.mkRaw ''
               function()
                 -- get the directory of the current file
                 local dir = vim.fn.expand('%:h')
@@ -926,7 +877,7 @@ programs.nixvim = {
           {
             mode = "n";
             key = "<leader>s";
-            action = config.lib.nixvim.mkRaw ''
+            action = lib.nixvim.mkRaw ''
               function()
                 if vim.wo.number then
                   vim.wo.number = false
@@ -980,7 +931,7 @@ programs.nixvim = {
           { command = "tabdo wincmd ="; event = "VimResized"; }
 
           { event = "BufRead"; pattern = [ "*.flux" ]; command = "set filetype=flux"; }
-          { event = "FileType"; pattern = [ "nix" "lua" "stylus" ]; command = "set tabstop=2 softtabstop=2 shiftwidth=2 expandtab"; }
+          { event = "FileType"; pattern = [ "nix" "lua" "stylus" "json" ]; command = "set tabstop=2 softtabstop=2 shiftwidth=2 expandtab"; }
 
           # Terminal settings
           { event = "TermOpen"; command = "setlocal nonumber norelativenumber scrolloff=0 winfixwidth winfixheight"; }
@@ -1010,8 +961,5 @@ programs.nixvim = {
             dofile(init_lua)
           end
         '';
-
-      };
-
 
 }

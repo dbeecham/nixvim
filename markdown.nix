@@ -1,20 +1,8 @@
-{ config, ... }: 
-with { inherit (config.lib.nixvim) mkRaw; };
+{ lib, ... }:
 {
-  programs.nixvim = {
-    autoGroups.markdown.clear = true;
-    autoCmd = [
-      {
-        event = "BufRead";
-        group = "markdown";
-        pattern = [ "*.md" ];
-        callback = mkRaw ''
-          function(ev)
-            vim.wo.number = false
-            vim.wo.relativenumber = false
-          end
-        '';
-      }
-    ];
-  };
+
+  keymaps = [
+    { filetype = "markdown"; mode = "n"; key = "<leader>llr"; action = lib.nixvim.mkRaw "vim.snippet.expand('`')"; options.desc = "something"; }
+  ];
+
 }

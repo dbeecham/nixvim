@@ -1,39 +1,29 @@
 {
   inputs = {
-    nixvim.url = "github:nix-community/nixvim";
+    nixpkgs.url = "github:NixOS/nixpkgs/HEAD";
+    nixvim.url = "github:nix-community/nixvim/HEAD";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixvim, ... }: {
+  outputs = { self, nixpkgs, nixvim, ... }: {
+
+    packages.x86_64-linux.default = nixvim.legacyPackages.x86_64-linux.makeNixvimWithModule {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      module = ./nixvim.nix;
+    };
+
 
     nixosModules.default = { config, pkgs, lib, ... }: {
       imports = [ 
         nixvim.nixosModules.default 
-        # <https://github.com/jpalardy/vim-slime ⭐️2.0k 💾0.7k>
-        ./vim-slime.nix
-        ./markdown.nix
-        ./codecompanion.nix
-        ./twilight.nix
-        #./markdown-table-mode.nix
-        # <https://github.com/aaronik/treewalker.nvim ⭐️0.5k 💾0.2k>
-        ./treewalker.nix
-        ./everything.nix
-        ./opencode.nix
+        { programs.nixvim = { enable = true; imports = [ ./nixvim.nix ]; }; }
       ];
     };
 
     darwinModules.default = { config, pkgs, lib, ... }: {
       imports = [ 
         nixvim.nixDarwinModules.default
-        # <https://github.com/jpalardy/vim-slime ⭐️2.0k 💾0.7k>
-        ./vim-slime.nix
-        ./markdown.nix
-        ./codecompanion.nix
-        ./twilight.nix
-        #./markdown-table-mode.nix
-        # <https://github.com/aaronik/treewalker.nvim ⭐️0.5k 💾0.2k>
-        ./treewalker.nix
-        ./everything.nix
-        ./opencode.nix
+        { programs.nixvim = { enable = true; imports = [ ./nixvim.nix ]; }; }
       ];
     };
 
