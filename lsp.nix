@@ -71,6 +71,11 @@
           };
         };
       };
+
+      yamlls = {
+        enable = true;
+      };
+
     };
   };
 
