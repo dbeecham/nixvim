@@ -48,6 +48,10 @@
         };
       };
 
+      markdown_oxide = {
+        enable = true;
+      };
+
       # Nix
       nixd.enable = true;
       nil_ls.enable = true;
