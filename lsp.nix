@@ -76,9 +76,13 @@
         };
       };
 
+      # Yaml
       yamlls = {
         enable = true;
       };
+
+      # Bash
+      bashls.enable = true;
 
     };
   };
