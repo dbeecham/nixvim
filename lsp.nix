@@ -1,6 +1,10 @@
 { lib, ... }:
 {
 
+  lsp = {
+    inlayHints.enable = true;
+  };
+
   # <https://github.com/neovim/nvim-lspconfig ⭐️15.5k 💾3.7k>
   plugins.lsp = {
     enable = true;
