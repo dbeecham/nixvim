@@ -86,7 +86,7 @@
   keymaps = [
     { mode = "n"; key = "<leader>llr"; action = lib.nixvim.mkRaw "vim.lsp.codelens.run"; options.desc = "codelens:run"; }
     { mode = "n"; key = "<leader>llc"; action = lib.nixvim.mkRaw "function() vim.lsp.codelens.clear(nil, 0) end"; options.desc = "codelens:clear"; }
-    { mode = "n"; key = "<leader>llr"; action = lib.nixvim.mkRaw "function() vim.lsp.codelens.refresh({ bufnr = 0 }) end"; options.desc = "codelens:refresh"; }
+    { mode = "n"; key = "<leader>llR"; action = lib.nixvim.mkRaw "function() vim.lsp.codelens.refresh({ bufnr = 0 }) end"; options.desc = "codelens:refresh"; }
   ];
 
   extraConfigLuaPost = ''
