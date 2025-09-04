@@ -15,6 +15,7 @@
     ./lsp.nix
     ./luasnip.nix
     ./json-txt.nix
+    ./lint.nix
   ];
 
 }

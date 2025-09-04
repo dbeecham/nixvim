@@ -429,9 +429,6 @@ with { inherit (lib.nixvim) mkRaw; };
           };
         };
 
-        # <https://github.com/mfussenegger/nvim-lint/ ⭐️2.4k 💾0.5k>
-        plugins.lint.enable = true;
-
         # <https://github.com/stevearc/aerial.nvim ⭐️2.1k 💾0.8k>
         # lsp/treesitter/markdown/asciidoc/man based outline
         plugins.aerial.enable = true;
