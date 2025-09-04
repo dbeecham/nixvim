@@ -6,6 +6,7 @@
   };
   autoCmd = [
     {
+      group = "json-txt";
       command = "setlocal filetype=json";
       event = [
         "BufRead"
