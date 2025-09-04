@@ -880,10 +880,12 @@ with { inherit (lib.nixvim) mkRaw; };
                   vim.wo.number = false
                   vim.wo.relativenumber = false
                   vim.wo.signcolumn = "no"
+                  vim.wo.foldcolumn = "0"
                 else
                   vim.wo.number = true
                   vim.wo.relativenumber = true
                   vim.wo.signcolumn = "auto"
+                  vim.wo.foldcolumn = "1"
                 end
               end
             '';
