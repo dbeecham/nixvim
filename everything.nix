@@ -429,9 +429,6 @@ with { inherit (lib.nixvim) mkRaw; };
           };
         };
 
-        # <https://github.com/mfussenegger/nvim-lint/ ⭐️2.4k 💾0.5k>
-        plugins.lint.enable = true;
-
         # <https://github.com/stevearc/aerial.nvim ⭐️2.1k 💾0.8k>
         # lsp/treesitter/markdown/asciidoc/man based outline
         plugins.aerial.enable = true;
@@ -734,6 +731,20 @@ with { inherit (lib.nixvim) mkRaw; };
 
           {
             mode = "i";
+            key = "";
+            action = lib.nixvim.mkRaw ''
+              function()
+                if require('copilot.suggestion').is_visible() then
+                  require('copilot.suggestion').accept_line()
+                end
+              end
+            '';
+            options.silent = true;
+            options.desc = "Accept Copilot suggestion";
+          }
+
+          {
+            mode = "i";
             key = "<F13>";
             action = lib.nixvim.mkRaw ''
               function()
@@ -883,10 +894,12 @@ with { inherit (lib.nixvim) mkRaw; };
                   vim.wo.number = false
                   vim.wo.relativenumber = false
                   vim.wo.signcolumn = "no"
+                  vim.wo.foldcolumn = "0"
                 else
                   vim.wo.number = true
                   vim.wo.relativenumber = true
                   vim.wo.signcolumn = "auto"
+                  vim.wo.foldcolumn = "1"
                 end
               end
             '';

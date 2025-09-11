@@ -14,6 +14,8 @@
     ./opencode.nix
     ./lsp.nix
     ./luasnip.nix
+    ./json-txt.nix
+    ./lint.nix
   ];
 
 }
