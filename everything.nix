@@ -663,7 +663,7 @@ with { inherit (lib.nixvim) mkRaw; };
         keymaps = [
           { mode = [ "v" "n" ]; key = "J"; action = "5j"; }
           { mode = [ "v" "n" ]; key = "K"; action = "5k"; }
-          { mode = "n"; key = "å"; action = "["; }
+          { mode = "n"; key = "å"; action = "["; options.noremap = false; }
           { mode = "n"; key = "¨"; action = "]"; }
           { mode = "n"; key = "-"; action = "/"; options.noremap = false; }
           { mode = "i"; key = "<c-a>"; action = "<home>"; }
