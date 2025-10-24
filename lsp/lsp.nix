@@ -1,0 +1,159 @@
+{ lib, pkgs, ... }:
+{
+
+  lsp = {
+    inlayHints.enable = true;
+
+    servers.emmylua_ls = {
+      enable = true;
+      settings = {
+        # cmd = "emmylua_ls";
+        # filetypes = [ "lua" ];
+        # root_markers = [ ".git/" ];
+        # workspace_required = true;
+        # root_dir = ...
+        # settings = {} (https://github.com/neovim/nvim-lspconfig/blob/master/lsp/hls.lua)
+        # init_options = {} (https://github.com/neovim/nvim-lspconfig/blob/master/lsp/html.lua)
+        # capabilities = ... (https://github.com/neovim/nvim-lspconfig/blob/master/lsp/helm_ls.lua)
+        # 
+        # for some reason, this does not work, I don't know why
+        # cmd = [ 
+        #   "systemd-run"  
+        #   "--quiet"
+        #   "--user"
+        #   "--scope"
+        #   "--same-dir"
+        #   "--collect"
+        #   "--nice=10"
+        #   "--property=CPUQuota=50%"
+        #   "--property=CPUWeight=25"
+        #   "--property=StartupCPUWeight=100"
+        #   "--property=MemoryMax=1G"
+        #   "--property=IOWeight=25"
+        #   "${lib.getExe pkgs.emmylua-ls}" 
+        # ];
+        settings.Lua = {
+          runtime = {
+            version = "LuaJIT";
+            requirePattern = [
+              "lua/?.lua"
+              "lua/?/init.lua"
+              "?/lua/?.lua"
+              "?/lua/?/init.lua"
+            ];
+          };
+          workspace = {
+            # library = [ (lib.nixvim.mkRaw "vim.env.VIMRUNTIME") ];
+            library = lib.nixvim.mkRaw "vim.api.nvim_get_runtime_file('', true)";
+            ignoreGlobs = ["**/*_spec.lua"];
+          };
+          diagnostics = {
+            globals = [ "vim" ];
+            disable = [ "undefined-global" ];
+          };
+        };
+      };
+    };
+
+  };
+
+  # <https://github.com/neovim/nvim-lspconfig ⭐️15.5k 💾3.7k>
+  plugins.lsp = {
+    enable = true;
+    autoLoad = true;
+    servers = {
+
+      # pyright is a popular choice for Python LSP, it's good, but mypy is more
+      # thorough. ruff handles linting and formatting and replaces flake8,
+      # isort, black, etc. mypy is the golden standard for Python type
+      # checking.
+      pyright = {
+        enable = true;
+        autostart = true;
+        settings = {
+          pyright = {
+            disableOrganizeImports = true; # ruff handles this
+          };
+          python = {
+            analysis = {
+              # "off", "basic", "strict". I'm using mypy.
+              typeCheckingMode = "off"; 
+              ignore = [ "*" ];
+            };
+          };
+        };
+      };
+
+      ruff = {
+        enable = true;
+      };
+
+      pylsp.enable = true;
+      pylsp.settings.plugins = {
+        pylsp_mypy = {
+          enabled = true;
+          live_mode = true;
+        };
+      };
+
+      # <https://github.com/oppiliappan/statix ⭐️0.7k 💾0.3k>
+      # Lints and suggestions for the nix programming language
+      statix = {
+        enable = true;
+      };
+
+      # <https://github.com/ribru17/ts_query_ls ⭐️108 💾278>
+      # An LSP implementation for tree-sitter query files
+      ts_query_ls = {
+        enable = false;
+      };
+
+      hyprls.enable = true;
+
+      # <https://github.com/typescript-language-server/typescript-language-server ⭐️2.2k 💾0.6k>
+      ts_ls = {
+        enable = true;
+      };
+
+      markdown_oxide = {
+        enable = true;
+      };
+
+      # Nix
+      nixd.enable = true;
+      nil_ls.enable = true;
+
+      # CSS
+      tailwindcss.enable = true;
+      cssls = {
+        enable = true;
+        extraOptions.init_options.provideFormatter = false;
+      };
+
+      # JSON
+      jsonls.enable = true;
+
+      # Yaml
+      yamlls = {
+        enable = true;
+      };
+
+      # Bash
+      bashls.enable = true;
+
+    };
+  };
+
+  # keymaps = [
+  #   { mode = "n"; key = "<leader>llr"; action = lib.nixvim.mkRaw "vim.lsp.codelens.run"; options.desc = "codelens:run"; }
+  #   { mode = "n"; key = "<leader>llc"; action = lib.nixvim.mkRaw "function() vim.lsp.codelens.clear(nil, 0) end"; options.desc = "codelens:clear"; }
+  #   { mode = "n"; key = "<leader>llR"; action = lib.nixvim.mkRaw "function() vim.lsp.codelens.refresh({ bufnr = 0 }) end"; options.desc = "codelens:refresh"; }
+  # ];
+
+  extraConfigLuaPost = ''
+    require('which-key').add({
+      { "<leader>ll", desc = "Code [L]ens", icon = "🔍" },
+    })
+  '';
+}
+
