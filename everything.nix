@@ -202,6 +202,7 @@ with { inherit (lib.nixvim) mkRaw; };
     { mode = "t"; key = "<M-c>"; action = "<C-\\><C-n>"; }
     { mode = "t"; key = "<Esc>"; action = "<C-\\><C-n>"; }
     { mode = "n"; key = "q"; action = ":q<cr>"; }
+    { mode = "n"; key = "Q"; action = ":cquit<cr>"; }
     { mode = "n"; key = "<M-h>"; action = ":Treewalker Left<cr>"; options.silent = true; }
     { mode = "n"; key = "<M-j>"; action = ":Treewalker Down<cr>"; options.silent = true; }
     { mode = "n"; key = "<M-k>"; action = ":Treewalker Up<cr>"; options.silent = true; }

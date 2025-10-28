@@ -11,32 +11,22 @@
   # :checkhealth noice
   plugins.noice = {
     enable = true;
-    lazyLoad.settings.enabled = "not vim.g.vscode";
+    lazyLoad.settings.enabled = "not vim.g.vscode and vim.fn.filereadable(vim.fn.expand('~/.config/nvim/noice.disable'))==0";
 
     settings = {
-
-      presets = {
-        lsp_doc_border = true;
-      };
-
+      # presets = {
+      #   lsp_doc_border = true;
+      # };
       lsp = {
-        signature = {
-          enabled = true;
-          auto_open = {
-            enabled = true;
-          };
-        };
-        override = {
-          "vim.lsp.util.convert_input_to_markdown_lines" = true;
-          "vim.lsp.util.stylize_markdown" = true;
-        };
-        hover.enabled = true;
+        # blink.cmp overrides noice signature help.
+        signature.enabled = false;
+        # built-in is fine
+        hover.enabled = false;
         progress.enabled = false;
       };
 
-      cmdline = {
-        enabled = true;
-      };
+      # This is basically all I want from noice
+      cmdline.enabled = true;
 
       # Ignore the 'Agent is not initialized' message; it's a temporary error
       # about copilot not being initialized yet.

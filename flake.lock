@@ -67,22 +67,6 @@
         "type": "github"
       }
     },
-    "markdown-table-mode": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1752418077,
-        "narHash": "sha256-Pwsp9QQiADvzMjn2jSiQ/MPVCYjVnugKu55gbjvlYDk=",
-        "owner": "Kicamon",
-        "repo": "markdown-table-mode.nvim",
-        "rev": "bb1ea9b76c1b29e15e14806fdfbb2319df5c06f1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Kicamon",
-        "repo": "markdown-table-mode.nvim",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1759944796,
@@ -148,7 +132,6 @@
     },
     "root": {
       "inputs": {
-        "markdown-table-mode": "markdown-table-mode",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "snacks-nvim": "snacks-nvim"
