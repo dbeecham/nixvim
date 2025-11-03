@@ -4,6 +4,21 @@
   lsp = {
     inlayHints.enable = true;
 
+    servers.ruff = {
+      enable = true;
+      activate = false;
+    };
+
+    servers.pylsp = {
+      enable = true;
+      activate = false;
+    };
+
+    servers.pyright = {
+      enable = true;
+      activate = false;
+    };
+
     servers.emmylua_ls = {
       enable = true;
       settings = {
@@ -15,23 +30,6 @@
         # settings = {} (https://github.com/neovim/nvim-lspconfig/blob/master/lsp/hls.lua)
         # init_options = {} (https://github.com/neovim/nvim-lspconfig/blob/master/lsp/html.lua)
         # capabilities = ... (https://github.com/neovim/nvim-lspconfig/blob/master/lsp/helm_ls.lua)
-        # 
-        # for some reason, this does not work, I don't know why
-        # cmd = [ 
-        #   "systemd-run"  
-        #   "--quiet"
-        #   "--user"
-        #   "--scope"
-        #   "--same-dir"
-        #   "--collect"
-        #   "--nice=10"
-        #   "--property=CPUQuota=50%"
-        #   "--property=CPUWeight=25"
-        #   "--property=StartupCPUWeight=100"
-        #   "--property=MemoryMax=1G"
-        #   "--property=IOWeight=25"
-        #   "${lib.getExe pkgs.emmylua-ls}" 
-        # ];
         settings.Lua = {
           runtime = {
             version = "LuaJIT";
@@ -67,34 +65,57 @@
       # thorough. ruff handles linting and formatting and replaces flake8,
       # isort, black, etc. mypy is the golden standard for Python type
       # checking.
-      pyright = {
-        enable = true;
-        autostart = true;
-        settings = {
-          pyright = {
-            disableOrganizeImports = true; # ruff handles this
-          };
-          python = {
-            analysis = {
-              # "off", "basic", "strict". I'm using mypy.
-              typeCheckingMode = "off"; 
-              ignore = [ "*" ];
-            };
-          };
-        };
-      };
+      # pyright = {
+      #   enable = true;
+      #   autostart = true;
+      #   settings = {
+      #     pyright = {
+      #       disableOrganizeImports = true; # ruff handles this
+      #     };
+      #     python = {
+      #       analysis = {
+      #         # "off", "basic", "strict". I'm using mypy.
+      #         typeCheckingMode = "off"; 
+      #         ignore = [ "*" ];
+      #       };
+      #     };
+      #   };
+      # };
 
-      ruff = {
-        enable = true;
-      };
+      # https://docs.astral.sh/ruff/configuration/
+      # https://docs.astral.sh/ruff/editors/settings/#configuration_resolution_order
+      # https://docs.astral.sh/ruff/editors/settings/#lint_enable
+      # ruff = {
+      #   enable = true;
+      #   activate = false;
+      #   settings = {
+      #     logLevel = "debug";
+      #     lint = {
+      #       enable = true;
+      #       preview = true;
+      #       select = [ "E" "F" ];
+      #     };
+      #     lineLength = 80;
+      #     configuration = {
+      #       format = {
+      #         "quote-style" = "double";
+      #       };
+      #     };
+      #   };
+      # };
 
-      pylsp.enable = true;
-      pylsp.settings.plugins = {
-        pylsp_mypy = {
-          enabled = true;
-          live_mode = true;
-        };
-      };
+      # pylsp = {
+      #   enable = true;
+      #   rootMarkers = [ "pyproject.toml" "setup.cfg" "setup.py" "requirements.txt" ".git/" ];
+      #   settings = {
+      #     plugins = {
+      #       pylsp_mypy = {
+      #         enabled = true;
+      #         live_mode = true;
+      #       };
+      #     };
+      #   };
+      # };
 
       # <https://github.com/oppiliappan/statix ⭐️0.7k 💾0.3k>
       # Lints and suggestions for the nix programming language

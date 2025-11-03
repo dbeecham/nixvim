@@ -7,6 +7,10 @@
     lazyLoad.settings.enabled = "not vim.g.vscode";
   };
 
+  plugins.notify = {
+    enable = true;
+  };
+
   # <https://github.com/folke/noice.nvim ⭐️5.3k 💾1.3k>
   # :checkhealth noice
   plugins.noice = {
@@ -39,11 +43,6 @@
             { find = "fewer lines"; }
           ];
           opts.skip = true;
-        }
-        {
-          filter.event = "notify";
-          filter.title = "snip";
-          view = "mini";
         }
         {
           filter = {
