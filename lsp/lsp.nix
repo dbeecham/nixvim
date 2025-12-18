@@ -19,6 +19,30 @@
       activate = false;
     };
 
+    servers.markdown_oxide = {
+      enable = true;
+      config = {
+        capabilities = {
+          workspace = {
+            didChangeWatchedFiles = {
+              dynamicRegistration = true;
+            };
+          };
+        };
+      };
+    };
+
+    servers.zk = {
+      enable = true;
+      config = {
+        filetypes = [ "markdown" ];
+      };
+    };
+
+    servers.bashls = {
+      enable = true;
+    };
+
     servers.emmylua_ls = {
       enable = true;
       settings = {
@@ -136,10 +160,6 @@
         enable = true;
       };
 
-      markdown_oxide = {
-        enable = true;
-      };
-
       # Nix
       nixd.enable = true;
       nil_ls.enable = true;
@@ -159,16 +179,30 @@
         enable = true;
       };
 
-      # Bash
-      bashls.enable = true;
-
     };
   };
+
+  extraPackages = [
+    # needed for vim.lsp file watcher
+    pkgs.inotify-tools
+  ];
 
   # keymaps = [
   #   { mode = "n"; key = "<leader>llr"; action = lib.nixvim.mkRaw "vim.lsp.codelens.run"; options.desc = "codelens:run"; }
   #   { mode = "n"; key = "<leader>llc"; action = lib.nixvim.mkRaw "function() vim.lsp.codelens.clear(nil, 0) end"; options.desc = "codelens:clear"; }
   #   { mode = "n"; key = "<leader>llR"; action = lib.nixvim.mkRaw "function() vim.lsp.codelens.refresh({ bufnr = 0 }) end"; options.desc = "codelens:refresh"; }
+  # ];
+
+  # autoCmd = [
+  #   {  
+  #     desc = "Update Code Lens Automatically";
+  #     buffer = lib.nixvim.mkRaw "bufnr";
+  #     callback = lib.nixvim.mkRaw ''
+  #       function()
+  #         vim.lsp.codelens.refresh({ bufnr = 0})
+  #       end
+  #     '';
+  #     event = [ "TextChanged" "InsertLeave" "CursorHold" "BufEnter" ];
   # ];
 
   extraConfigLuaPost = ''
