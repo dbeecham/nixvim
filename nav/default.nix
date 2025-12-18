@@ -40,6 +40,11 @@
       };
     };
   };
+
+  keymaps = [
+    { mode = "n"; key = "<leader>f"; action = ":Telescope find_files<cr>"; options.silent = true; options.desc = "Find Files"; }
+    { mode = "n"; key = "<leader>g"; action = ":Telescope live_grep<cr>"; options.silent = true; options.desc = "Live Grep"; }
+  ];
   
 
 }

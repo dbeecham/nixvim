@@ -20,7 +20,6 @@
       };
   };
 
-
   #https://github.com/folke/twilight.nvim
   plugins.twilight = {
     enable = true;
@@ -40,5 +39,6 @@
 
   keymaps = [
     { mode = "n"; key = "<F1>"; action = ":Twilight<cr>"; }
+    { mode = "n"; key = "<leader>zt"; action = ":ZenMode<cr>"; options.silent = true; options.desc = "Toggle zen mode"; }
   ];
 }

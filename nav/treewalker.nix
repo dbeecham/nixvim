@@ -60,5 +60,10 @@
       options.silent = true;
     }
 
+    { mode = "n"; key = "<M-h>"; action = ":Treewalker Left<cr>"; options.silent = true; }
+    { mode = "n"; key = "<M-j>"; action = ":Treewalker Down<cr>"; options.silent = true; }
+    { mode = "n"; key = "<M-k>"; action = ":Treewalker Up<cr>"; options.silent = true; }
+    { mode = "n"; key = "<M-l>"; action = ":Treewalker Right<cr>"; options.silent = true; }
+
   ];
 }

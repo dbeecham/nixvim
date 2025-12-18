@@ -203,12 +203,6 @@ with { inherit (lib.nixvim) mkRaw; };
     { mode = "t"; key = "<Esc>"; action = "<C-\\><C-n>"; }
     { mode = "n"; key = "q"; action = ":q<cr>"; }
     { mode = "n"; key = "Q"; action = ":cquit<cr>"; }
-    { mode = "n"; key = "<M-h>"; action = ":Treewalker Left<cr>"; options.silent = true; }
-    { mode = "n"; key = "<M-j>"; action = ":Treewalker Down<cr>"; options.silent = true; }
-    { mode = "n"; key = "<M-k>"; action = ":Treewalker Up<cr>"; options.silent = true; }
-    { mode = "n"; key = "<M-l>"; action = ":Treewalker Right<cr>"; options.silent = true; }
-    { mode = "n"; key = "<leader>f"; action = ":Telescope find_files<cr>"; options.silent = true; options.desc = "Find Files"; }
-    { mode = "n"; key = "<leader>zt"; action = ":ZenMode<cr>"; options.silent = true; options.desc = "Toggle zen mode"; }
 
 
     { 
