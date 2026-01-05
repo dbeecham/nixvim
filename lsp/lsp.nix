@@ -43,6 +43,10 @@
       enable = true;
     };
 
+    servers.rust_analyzer = {
+      enable = true;
+    };
+
     servers.emmylua_ls = {
       enable = true;
       settings = {
@@ -182,8 +186,8 @@
     };
   };
 
-  extraPackages = [
-    # needed for vim.lsp file watcher
+  # add inotify-tools for LSP file watching if Linux
+  extraPackages = lib.optionals (pkgs.stdenv.isLinux) [
     pkgs.inotify-tools
   ];
 

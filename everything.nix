@@ -118,6 +118,10 @@ with { inherit (lib.nixvim) mkRaw; };
     lazyLoad.settings.enabled = "not vim.g.vscode";
   };
 
+  plugins.nvim-surround = {
+    enable = true;
+  };
+
   opts = {
 
     # Number of lines to scroll when using ctrl+u and ctrl+d.
@@ -201,32 +205,32 @@ with { inherit (lib.nixvim) mkRaw; };
     { mode = "i"; key = "<c-e>"; action = "<end>"; }
     { mode = "t"; key = "<M-c>"; action = "<C-\\><C-n>"; }
     { mode = "t"; key = "<Esc>"; action = "<C-\\><C-n>"; }
-    { mode = "n"; key = "q"; action = ":q<cr>"; }
+    # { mode = "n"; key = "q"; action = ":q<cr>"; }
     { mode = "n"; key = "Q"; action = ":cquit<cr>"; }
 
 
-    { 
-      mode = "i";
-      key = "<Tab>";
-      action = lib.nixvim.mkRaw ''
-        function()
-
-          if require('luasnip').expand_or_jumpable() then
-            require('luasnip').expand_or_jump()
-            return
-          end
-
-          if require('blink-cmp').is_visible() then
-            require('blink-cmp').insert_next()
-            return
-          end
-
-          -- Feed the tab character as normal
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, false, true), 'n', true)
-        end
-      '';
-      options.silent = true;
-    }
+    # { 
+    #   mode = [ "i" "s" ];
+    #   key = "<Tab>";
+    #   action = lib.nixvim.mkRaw ''
+    #     function()
+    #
+    #       if require('luasnip').expand_or_jumpable() then
+    #         require('luasnip').expand_or_jump()
+    #         return
+    #       end
+    #
+    #       if require('blink-cmp').is_visible() then
+    #         require('blink-cmp').insert_next()
+    #         return
+    #       end
+    #
+    #       -- Feed the tab character as normal
+    #       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, false, true), 'n', true)
+    #     end
+    #   '';
+    #   options.silent = true;
+    # }
 
     { 
       mode = "i";
@@ -480,12 +484,6 @@ with { inherit (lib.nixvim) mkRaw; };
   ];
 
   extraConfigLuaPre = ''
-    -- If ~/.config/nvim/init.lua exists, load it
-    local init_lua = vim.fn.expand("~/.config/nvim/init.pre.lua")
-    if vim.fn.filereadable(init_lua) == 1 then
-      dofile(init_lua)
-    end
-
     -- Opening nvim in a terminal within nvim is pain when esc is mapped to 
     -- normal mode. If nvim is started in a nvim terminal, just quit.
     if vim.env.VIMRUNNING ~= nil and vim.fn.has("gui_running") == 0 then
@@ -494,13 +492,72 @@ with { inherit (lib.nixvim) mkRaw; };
     else
       vim.env.VIMRUNNING = 1
     end
+
+    local configwatch = function(file)
+      local path = vim.fn.stdpath("config") .. "/" .. file
+      if vim.fn.filereadable(path) then
+        local w = vim.uv.new_fs_event()
+        vim.notify("Watching " .. file .. " for changes...", vim.log.levels.INFO)
+        w:start(
+          path,
+          {},
+          vim.schedule_wrap(function(err, filename, status)
+            if err then
+              vim.notify("Error watching " .. file .. ": " .. err, vim.log.levels.ERROR)
+              return
+            end
+
+            vim.notify("Reloading " .. file .. "...", vim.log.levels.INFO)
+            dofile(path)
+            configwatch(file)
+          end)
+        )
+      end
+    end
+
+    local loadconfigwatch = function(file)
+      local path = vim.fn.stdpath("config") .. "/" .. file
+      vim.notify("Attempting to load " .. file .. "...", vim.log.levels.INFO)
+      if vim.fn.filereadable(path) then
+        vim.notify("Loading " .. file .. "...", vim.log.levels.INFO)
+        dofile(path)
+        configwatch(file)
+      end
+    end
+
+    -- If ~/.config/nvim/init.lua exists, load it
+    if vim.fn.filereadable(vim.fn.stdpath("config") .. "/init.local.lua") then
+      dofile(vim.fn.stdpath("config") .. "/init.local.lua")
+    end
   '';
 
   extraConfigLuaPost = ''
-    -- If ~/.config/nvim/init.lua exists, load it
-    local init_lua = vim.fn.expand("~/.config/nvim/init.local.lua")
-    if vim.fn.filereadable(init_lua) == 1 then
-      dofile(init_lua)
+
+    local config = function(name)
+      local path = vim.fn.stdpath("config") .. "/" .. name
+
+      -- Make sure the file exists
+      if not vim.fn.filereadable(path) then
+        return
+      end
+
+      dofile(path)
+
+      -- Add a watcher to the file
+      -- local w = vim.uv.new_fs_event()
+      -- w:start(
+      --   path,
+      --   {},
+      --   vim.schedule_wrap(function(err, filename, status)
+      --     if err then
+      --       vim.notify("Error watching " .. filename .. ": " .. err, vim.log.levels.ERROR)
+      --       return
+      --     end
+      --
+      --     vim.notify("Reloading " .. name .. "...", vim.log.levels.INFO)
+      --     config(name)
+      --   end)
+      -- )
     end
   '';
 

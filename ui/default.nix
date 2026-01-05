@@ -5,6 +5,7 @@
 
     # I don't like Noice, but it's the only plugin I know that implements a cmdline.
     ./noice.nix
+    ./fidget.nix
     ./lualine.nix
     ./which-key.nix
     ./gutter.nix

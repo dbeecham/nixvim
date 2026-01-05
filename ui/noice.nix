@@ -15,7 +15,7 @@
   # :checkhealth noice
   plugins.noice = {
     enable = true;
-    lazyLoad.settings.enabled = "not vim.g.vscode and vim.fn.filereadable(vim.fn.expand('~/.config/nvim/noice.disable'))==0";
+    lazyLoad.settings.enabled = "not vim.g.vscode and vim.fn.filereadable(vim.fn.expand('~/.config/nvim/init.local.d/noice.lua'))==0";
 
     settings = {
       # presets = {
@@ -23,10 +23,20 @@
       # };
       lsp = {
         # blink.cmp overrides noice signature help.
-        signature.enabled = false;
-        # built-in is fine
-        hover.enabled = false;
-        progress.enabled = false;
+        signature.enabled = true;
+        hover.enabled = true;
+        progress.enabled = true;
+        documentation = {
+          opts = {
+            border.style = "rounded";
+            relative = "cursor";
+            position = {
+              row = 2;
+              col = 0;
+            };
+            size.width = 0.9;
+          };
+        };
       };
 
       # This is basically all I want from noice

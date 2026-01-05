@@ -32,6 +32,7 @@
     ./nav/default.nix
     ./ft/default.nix
     ./lsp/default.nix
+    ./debug/default.nix
     ./everything.nix
 
   ];
