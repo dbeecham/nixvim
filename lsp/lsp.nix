@@ -6,17 +6,17 @@
 
     servers.ruff = {
       enable = true;
-      activate = false;
+      # activate = false;
     };
 
     servers.pylsp = {
       enable = true;
-      activate = false;
+      # activate = false;
     };
 
     servers.pyright = {
       enable = true;
-      activate = false;
+      # activate = false;
     };
 
     servers.markdown_oxide = {
