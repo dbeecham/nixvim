@@ -10,8 +10,12 @@
       # See [keymaps](https://cmp.saghen.dev/configuration/keymap.html) to figure this out.
       keymap.preset = "none";
       snippets.preset = "luasnip";
-      signature.enabled = true;
-      signature.window.border = "rounded";
+
+      # Both blink.cmp and noice has auto signature help. Make sure to only use one.
+      signature = {
+        enabled = false;
+        window.border = "rounded";
+      };
 
       cmdline = {
         enabled = true;
