@@ -15,7 +15,7 @@
   # :checkhealth noice
   plugins.noice = {
     enable = true;
-    lazyLoad.settings.enabled = "not vim.g.vscode and vim.fn.filereadable(vim.fn.expand('~/.config/nvim/init.local.d/noice.lua'))==0";
+    lazyLoad.settings.enabled = "not vim.g.vscode and not package.loaded['noice']";
 
     settings = {
       # presets = {
