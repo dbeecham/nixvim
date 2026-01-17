@@ -237,7 +237,7 @@ with { inherit (lib.nixvim) mkRaw; };
       key = "<S-Tab>";
       action = lib.nixvim.mkRaw ''
         function()
-          if require('blink-cmp').is_visible() then
+          if package.loaded['luasnip'] and require('blink-cmp').is_visible() then
             require('blink-cmp').insert_prev()
           else
             -- Feed the tab character as normal
@@ -295,7 +295,7 @@ with { inherit (lib.nixvim) mkRaw; };
       key = "<cr>";
       action = mkRaw ''
         function()
-          if require('blink-cmp').is_visible() and require('blink-cmp').get_selected_item() ~= nil then
+          if package.loaded['blink-cmp'] and require('blink-cmp').is_visible() and require('blink-cmp').get_selected_item() ~= nil then
             require('blink-cmp').accept()
             return
           end
