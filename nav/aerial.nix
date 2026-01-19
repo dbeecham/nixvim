@@ -1,7 +1,10 @@
 {
   # <https://github.com/stevearc/aerial.nvim ⭐️2.1k 💾0.8k>
   # lsp/treesitter/markdown/asciidoc/man based outline
-  plugins.aerial.enable = true;
+  plugins.aerial = {
+    enable = true;
+    lazyLoad.settings.enabled = "not vim.g.vscode and not package.loaded['aerial']";
+  };
 
   keymaps = [
     {
