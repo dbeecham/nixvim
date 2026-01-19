@@ -345,25 +345,6 @@ with { inherit (lib.nixvim) mkRaw; };
       options.desc = "Edit ~/.config/nvim/test.lua";
     }
 
-    # LSP
-    { mode = "n"; key = "gd"; action = ":Telescope lsp_definitions<cr>"; options.silent = true; options.desc = "Go to definition"; }
-    { mode = "n"; key = "<leader>ld"; action = ":Telescope lsp_definitions<cr>"; options.silent = true; options.desc = "Go to definition(s)"; }
-    { mode = "n"; key = "<leader>li"; action = ":Telescope lsp_implementations<cr>"; options.silent = true; options.desc = "Go to implementation(s)"; }
-    { mode = "n"; key = "<leader>lc"; action = ":Telescope lsp_incoming_calls<cr>"; options.silent = true; options.desc = "List Incoming Calls"; }
-    { mode = "n"; key = "<leader>lr"; action = ":Telescope lsp_references<cr>"; options.silent = true; options.desc = "List References"; }
-    { 
-      mode = "n"; 
-      key = "<leader>ld"; 
-      action = mkRaw ''
-        function()
-          local new_config = not vim.diagnostic.config().virtual_lines
-          vim.diagnostic.config({ virtual_lines = new_config })
-        end
-      '';
-      options.desc = "Toggle diagnostics";
-    }
-
-
     # dim
     { 
       mode = "n";
@@ -373,8 +354,8 @@ with { inherit (lib.nixvim) mkRaw; };
       options.desc = "Toggle dim"; 
     }
 
-    # treesitter context (i tried, this one is ok, it's not why nixvim is crashing rn)
     { mode = "n"; key = "<leader>ct"; action = lib.nixvim.mkRaw "require('treesitter-context').toggle"; options.silent = true; options.desc = "Toggle treesitter context"; }
+
     # Use gF to "forcefully" edit the file under the cursor, creating it if
     # it doesn't exist.
     {
