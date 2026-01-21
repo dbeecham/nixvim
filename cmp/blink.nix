@@ -65,6 +65,8 @@
           preselect = false;
           auto_insert = false;
         };
+
+        # We use copilot or 
         ghost_text = {
           enabled = false;
           show_with_menu = false;
