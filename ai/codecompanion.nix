@@ -17,7 +17,7 @@
   # In visual mode, use `:CodeCompanion <prompt>` to ask an LLM a question
   plugins.codecompanion = {
     enable = true;
-    #lazyLoad.settings.enabled = "not vim.g.vscode";
+    lazyLoad.settings.enabled = "not vim.g.vscode and not package.loaded['codecompanion']";
   };
 
 }
