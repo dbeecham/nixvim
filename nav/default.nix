@@ -1,7 +1,7 @@
 { lib, ... }: {
 
   imports = [
-    ./treewalker.nix
+    # ./tree-climber.nix
     ./aerial.nix
     ./neotree.nix
   ];
@@ -40,11 +40,25 @@
           };
         };
       };
+      pickers.find_files.find_command = [ "fd" "--type=f" "--follow" "--max-depth=8" "--max-results=10000" "--exclude=*.pyc" "--exclude=node_modules" ]; 
     };
   };
 
   keymaps = [
-    { mode = "n"; key = "<leader>f"; action = ":Telescope find_files<cr>"; options.silent = true; options.desc = "Find Files"; }
+
+    { 
+      mode = "n";
+      key = "<leader>f"; 
+      action = lib.nixvim.mkRaw ''
+        function()
+          require('telescope.builtin').find_files {
+            find_command = { "fd", "--type=f", "--follow", "--max-depth=8", "--max-results=10000", "--exclude=*.pyc", "--exclude=node_modules" }
+          }
+        end
+      '';
+      options = { silent = true; desc = "Find Files"; };
+    }
+
     { mode = "n"; key = "<leader>g"; action = ":Telescope live_grep<cr>"; options.silent = true; options.desc = "Live Grep"; }
   ];
   

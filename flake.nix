@@ -9,6 +9,9 @@
       url = "github:folke/snacks.nvim";
       flake = false;
     };
+    # tree-climber-nvim = {
+    #   url = "github:drybalka/tree-climber.nvim";
+    # };
     # markdown-table-mode = {
     #   url = "github:Kicamon/markdown-table-mode.nvim";
     #   flake = false;
@@ -17,6 +20,8 @@
   };
 
   outputs = { self, nixpkgs, nixvim, ... }: {
+
+
 
     packages.x86_64-linux.default = nixvim.legacyPackages.x86_64-linux.makeNixvimWithModule {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
