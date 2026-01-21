@@ -1,4 +1,4 @@
-{
+{ lib, ... }: {
 
   imports = [
     ./treewalker.nix
@@ -35,6 +35,8 @@
         mappings = {
           i = {
             "<C-u>" = false;
+            "<Esc>" = lib.nixvim.mkRaw "require('telescope.actions').close";
+            "<C-d>" = lib.nixvim.mkRaw "require('telescope.actions').close";
           };
         };
       };
