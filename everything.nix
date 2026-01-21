@@ -198,14 +198,26 @@ with { inherit (lib.nixvim) mkRaw; };
   keymaps = [
     # { mode = [ "v" "n" ]; key = "J"; action = "5j"; }
     # { mode = [ "v" "n" ]; key = "K"; action = "5k"; }
+
+    # Remap Swedish keyboard layout keys to easier-to-reach keys for normal mode
     { mode = "n"; key = "å"; action = "["; options.remap = true; }
     { mode = "n"; key = "¨"; action = "]"; options.remap = true; }
     { mode = "n"; key = "-"; action = "/"; options.remap = true; }
-    { mode = "i"; key = "<c-a>"; action = "<home>"; }
-    { mode = "i"; key = "<c-e>"; action = "<end>"; }
+
+    # Make Ctrl-A go to the beginning of the command line in command mode
+    { mode = "c"; key = "<c-a>"; action = "<home>"; }
+
+    # Getting out of the terminal mode is hard on swedish keyboard layouts. Using
+    # escape here is not ideal, since terminal applications may want it, but
+    # it's better than nothing. M-c only works for... well-configured terminals.
     { mode = "t"; key = "<M-c>"; action = "<C-\\><C-n>"; }
     { mode = "t"; key = "<Esc>"; action = "<C-\\><C-n>"; }
-    # { mode = "n"; key = "q"; action = ":q<cr>"; }
+
+    # Apparently, I've gone back and forward on using q and w for quitting and
+    # saving. I'm currently feeling like it gives me less finger strain. It's
+    # pretty comfy. Note to self: if I do regret this, write it down.
+    # It's because it's already bound to record macro.
+    { mode = "n"; key = "q"; action = ":q<cr>"; options = { silent = true; }; }
     { mode = "n"; key = "Q"; action = ":cquit<cr>"; }
 
 
@@ -239,13 +251,17 @@ with { inherit (lib.nixvim) mkRaw; };
         function()
           if package.loaded['luasnip'] and require('blink-cmp').is_visible() then
             require('blink-cmp').insert_prev()
-          else
-            -- Feed the tab character as normal
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<S-Tab>', true, false, true), 'n', true)
+            return
           end
+
+          return "<S-Tab>"
         end
       '';
-      options.silent = true;
+
+      options = {
+        silent = true;
+        expr = true;
+      };
     }
 
     {
@@ -513,6 +529,12 @@ with { inherit (lib.nixvim) mkRaw; };
   '';
 
   extraConfigLuaPost = ''
+
+    -- If ~/.config/nvim/init.lua exists, load it
+    if vim.fn.filereadable(vim.fn.stdpath("config") .. "/init.post.lua") then
+      dofile(vim.fn.stdpath("config") .. "/init.post.lua")
+    end
+
 
     local config = function(name)
       local path = vim.fn.stdpath("config") .. "/" .. name
