@@ -46,6 +46,7 @@
     ./ft/default.nix
     ./lsp/default.nix
     ./debug/default.nix
+    ./build/default.nix
     ./everything.nix
 
   ];
