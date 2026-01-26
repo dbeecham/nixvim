@@ -48,16 +48,18 @@ with { inherit (lib.nixvim) mkRaw; };
   # <https://github.com/nvim-treesitter/nvim-treesitter-textobjects ⭐️2.5k 💾0.6k>
   plugins.treesitter-textobjects = {
     enable = true;
-    select = {
-      enable = true;
-      keymaps = {
-        "af" = "@function.outer";
-        "if" = "@function.inner";
-        "ac" = "@class.outer";
-        "ic" = "@class.inner";
-        "aC" = "@conditional.outer";
-        "iC" = "@conditional.inner";
-        "as" = "@local.scope";
+    settings = {
+      select = {
+        enable = true;
+        keymaps = {
+          "af" = "@function.outer";
+          "if" = "@function.inner";
+          "ac" = "@class.outer";
+          "ic" = "@class.inner";
+          "aC" = "@conditional.outer";
+          "iC" = "@conditional.inner";
+          "as" = "@local.scope";
+        };
       };
     };
   };

@@ -3,15 +3,17 @@
   # <https://github.com/nvim-neo-tree/neo-tree.nvim ⭐️4.9k 💾0.8k>
   plugins.neo-tree = {
     enable = true;
-    filesystem = {
-      useLibuvFileWatcher = true;
-      followCurrentFile = {
-        enabled = true;
-        leaveDirsOpen = true;
+    settings = {
+      filesystem = {
+        use_libuv_file_watcher = true;
+        follow_current_file = {
+          enabled = true;
+          leave_dirs_open = true;
+        };
       };
+      close_if_last_window = true;
+      window.width = 30;
     };
-    closeIfLastWindow = true;
-    window.width = 30;
   };
 
   extraConfigLuaPost = ''
