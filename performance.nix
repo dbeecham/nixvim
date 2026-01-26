@@ -25,7 +25,7 @@
       # the number of files loaded at startup, improving startup time.
       # NOTE: This is experimental, and will fail if files names are not unique across
       # all plugins.
-      enable = true;
+      enable = false;
 
       # List of plugins to exclude from combining.
       standalonePlugins = [];
