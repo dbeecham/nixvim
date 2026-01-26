@@ -4,7 +4,7 @@
   # Until [!836](https://github.com/Saghen/blink.cmp/issues/836) is fixed, I'm not using blink.cmp for ghost text.
   plugins.blink-cmp = {
     enable = true;
-    lazyLoad.settings.enabled = "not vim.g.vscode and not package.loaded['blink-cmp']";
+    lazyLoad.settings.enabled = "not (vim.g.vscode or os.getenv('DISABLE_BLINK'))";
     settings = {
 
       # See [keymaps](https://cmp.saghen.dev/configuration/keymap.html) to figure this out.
@@ -125,12 +125,12 @@
 
   plugins.blink-cmp-git = {
     enable = true;
-    lazyLoad.settings.enabled = "not vim.g.vscode";
+    lazyLoad.settings.enabled = "not (vim.g.vscode or os.getenv('DISABLE_BLINK'))";
   };
 
   plugins.blink-cmp-copilot = {
     enable = false;
-    lazyLoad.settings.enabled = "not vim.g.vscode";
+    lazyLoad.settings.enabled = "not (vim.g.vscode or os.getenv('DISABLE_BLINK'))";
   };
 
 }
