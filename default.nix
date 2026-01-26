@@ -39,6 +39,7 @@
 
     ./performance.nix
     ./mkview.nix
+    ./surround.nix
     ./ui/default.nix
     ./cmp/default.nix
     ./slime/default.nix

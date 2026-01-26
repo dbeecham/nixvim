@@ -64,45 +64,6 @@ with { inherit (lib.nixvim) mkRaw; };
     };
   };
 
-  # <https://github.com/andymass/vim-matchup ⭐️1.8k 💾0.8k>
-  # Extends vim's `%` motion to match more than just parentheses, and
-  # provides additional text objects for matching pairs.
-  plugins.vim-matchup = {
-    enable = true;
-    # I use sandwich for surround, so disable it in vim-matchup
-    settings.surround_enabled = 0;
-  };
-
-  # <https://github.com/machakann/vim-sandwich ⭐️1.5k 💾0.5k>
-  # We need to edit the key mappings for sandwith; both vim-sandwith and
-  # leap.nvim uses the 's' key.
-  # sandwich is a plugin that allows you to easily add, change, and delete
-  # surrounding characters in your text;
-  #  - sa'    - Surround Add single quotes
-  #  - sr'"   - Surround Replace single quotes with double quotes
-  #  - sd'    - Surround Delete single quotes
-  #  - sdb    - Surround Delete auto
-  #  - srb    - Surround Replace auto
-  #  - saiw[  - Surround Add Inner Word brackets
-  #  - sais'  - Surround Add Inner Sentence single quotes
-  #  - saib'  - Surround Add Inner Block single quotes
-  #  - sait'  - Surround Add Inner Tag single quotes
-  #  - Vsa(   - Visual Surround Add parentheses
-  #  - ^Vsa{  - Block Visual Surround Add curly braces
-  # The 'ib', 'ab', 'is' and 'as' are text objects for automatically
-  # selecting a "block" or a "search". They are configured using g:sandwith#recipes.
-  plugins.sandwich = {
-    enable = true;
-    settings = {
-      no_default_key_mappings = 0;
-    };
-  };
-
-  # <https://github.com/m4xshen/autoclose.nvim ⭐️0.6k 💾0.1k>
-  # So, what I've learned is that I don't want to automatically close
-  # brackets and stuff, I want to easily be able to close them.
-  # plugins.autoclose.enable = true;
-
   # <https://github.com/andrewferrier/debugprint.nvim ⭐️0.5k 💾1.0k>
   # The 'debugprint' plugin is a neat way to add debug prints to your code.
   # It's triggered by hitting 'g?p' to add a print statement below, and 'g?P'
@@ -118,10 +79,6 @@ with { inherit (lib.nixvim) mkRaw; };
   plugins.toggleterm = {
     enable = true;
     lazyLoad.settings.enabled = "not vim.g.vscode";
-  };
-
-  plugins.nvim-surround = {
-    enable = true;
   };
 
   opts = {
