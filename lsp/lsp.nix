@@ -225,12 +225,13 @@
   '';
 
   keymaps = [
-    { mode = "n"; key = "gd"; action = ":Telescope lsp_definitions<cr>"; options.silent = true; options.desc = "Go to definition"; }
-    { mode = "n"; key = "<leader>ld"; action = ":Telescope lsp_definitions<cr>"; options.silent = true; options.desc = "Go to definition(s)"; }
-    { mode = "n"; key = "<leader>li"; action = ":Telescope lsp_implementations<cr>"; options.silent = true; options.desc = "Go to implementation(s)"; }
-    { mode = "n"; key = "<leader>lc"; action = ":Telescope lsp_incoming_calls<cr>"; options.silent = true; options.desc = "List Incoming Calls"; }
-    { mode = "n"; key = "<leader>lr"; action = ":Telescope lsp_references<cr>"; options.silent = true; options.desc = "List References"; }
-    { mode = "n"; key = "<leader>ls"; action = ":Telescope lsp_document_symbols<cr>"; options.silent = true; options.desc = "List Symbols"; }
+    { mode = "n"; key = "gd"; action = ":Telescope lsp_definitions<cr>"; options.silent = true; options.desc = "goto definition(s)"; }
+    # overwritten by toggle dianostics
+    { mode = "n"; key = "<leader>ld"; action = ":Telescope lsp_definitions<cr>"; options.silent = true; options.desc = "goto definition(s)"; }
+    { mode = "n"; key = "<leader>li"; action = ":Telescope lsp_implementations<cr>"; options.silent = true; options.desc = "goto implementation(s)"; }
+    { mode = "n"; key = "<leader>lc"; action = ":Telescope lsp_incoming_calls<cr>"; options.silent = true; options.desc = "incoming"; }
+    { mode = "n"; key = "<leader>lr"; action = ":Telescope lsp_references<cr>"; options.silent = true; options.desc = "references"; }
+    { mode = "n"; key = "<leader>ls"; action = ":Telescope lsp_document_symbols<cr>"; options.silent = true; options.desc = "symbols"; }
     { 
       mode = "n"; 
       key = "<leader>ld"; 
