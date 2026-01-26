@@ -46,6 +46,8 @@
 
   keymaps = [
 
+    { mode = "n"; key = "<leader>b"; action = ":Telescope buffers<cr>"; options.silent = true; options.desc = "symbols"; }
+
     { 
       mode = "n";
       key = "<leader>f"; 
