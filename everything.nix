@@ -182,12 +182,7 @@ with { inherit (lib.nixvim) mkRaw; };
     # often the swap file is written to disk, and how often the cursor
     # position is "idle" (the CursorHold and CursorHoldI events). Set it to
     # something more reasonable.
-    updatetime = 1000;
-
-    # 'viewoptions' control what is saved to a view created by 'mkview'. By
-    # default, it's set to 'cursor,folds,curdir', which is pretty reasonable.
-    # I just want this here so I can keep track of it.
-    viewoptions = "cursor,folds,curdir";
+    updatetime = 500;
 
     # lualine recommends to set this.
     laststatus = 3;
