@@ -451,38 +451,6 @@ with { inherit (lib.nixvim) mkRaw; };
       vim.env.VIMRUNNING = 1
     end
 
-    local configwatch = function(file)
-      local path = vim.fn.stdpath("config") .. "/" .. file
-      if vim.fn.filereadable(path) then
-        local w = vim.uv.new_fs_event()
-        vim.notify("Watching " .. file .. " for changes...", vim.log.levels.INFO)
-        w:start(
-          path,
-          {},
-          vim.schedule_wrap(function(err, filename, status)
-            if err then
-              vim.notify("Error watching " .. file .. ": " .. err, vim.log.levels.ERROR)
-              return
-            end
-
-            vim.notify("Reloading " .. file .. "...", vim.log.levels.INFO)
-            dofile(path)
-            configwatch(file)
-          end)
-        )
-      end
-    end
-
-    local loadconfigwatch = function(file)
-      local path = vim.fn.stdpath("config") .. "/" .. file
-      vim.notify("Attempting to load " .. file .. "...", vim.log.levels.INFO)
-      if vim.fn.filereadable(path) then
-        vim.notify("Loading " .. file .. "...", vim.log.levels.INFO)
-        dofile(path)
-        configwatch(file)
-      end
-    end
-
     -- If ~/.config/nvim/init.lua exists, load it
     if vim.fn.filereadable(vim.fn.stdpath("config") .. "/init.local.lua") then
       dofile(vim.fn.stdpath("config") .. "/init.local.lua")
@@ -490,38 +458,9 @@ with { inherit (lib.nixvim) mkRaw; };
   '';
 
   extraConfigLuaPost = ''
-
     -- If ~/.config/nvim/init.lua exists, load it
     if vim.fn.filereadable(vim.fn.stdpath("config") .. "/init.post.lua") then
       dofile(vim.fn.stdpath("config") .. "/init.post.lua")
-    end
-
-
-    local config = function(name)
-      local path = vim.fn.stdpath("config") .. "/" .. name
-
-      -- Make sure the file exists
-      if not vim.fn.filereadable(path) then
-        return
-      end
-
-      dofile(path)
-
-      -- Add a watcher to the file
-      -- local w = vim.uv.new_fs_event()
-      -- w:start(
-      --   path,
-      --   {},
-      --   vim.schedule_wrap(function(err, filename, status)
-      --     if err then
-      --       vim.notify("Error watching " .. filename .. ": " .. err, vim.log.levels.ERROR)
-      --       return
-      --     end
-      --
-      --     vim.notify("Reloading " .. name .. "...", vim.log.levels.INFO)
-      --     config(name)
-      --   end)
-      -- )
     end
   '';
 
