@@ -19,21 +19,22 @@
 
   };
 
-  outputs = { self, nixpkgs, nixvim, ... }: {
+  outputs = { self, nixpkgs, nixvim, ... }: 
+  let
+    forAllSystems = f:
+      nixpkgs.lib.genAttrs
+        [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ]
+        (system: f { pkgs = nixpkgs.legacyPackages.${system}; nixvim = nixvim.legacyPackages.${system}; });
+  in {
 
-
-
-    packages.x86_64-linux.default = nixvim.legacyPackages.x86_64-linux.makeNixvimWithModule {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      module = ./default.nix;
-      extraSpecialArgs = { inherit self; };
-    };
-
-    packages.aarch64-darwin.default = nixvim.legacyPackages.aarch64-darwin.makeNixvimWithModule {
-      pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-      module = ./default.nix;
-      extraSpecialArgs = { inherit self; };
-    };
+    packages = forAllSystems ({ pkgs, nixvim }: rec {
+      default = nixvim.makeNixvimWithModule {
+        inherit pkgs;
+        module = ./default.nix;
+        extraSpecialArgs = { inherit self; };
+      };
+      "default.config.build.initFile" = default.config.build.initFile;
+    });
 
     nixosModules.default = { ... }: {
       nixpkgs.overlays = [(final: prev: {
