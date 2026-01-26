@@ -4,21 +4,30 @@
   lsp = {
     inlayHints.enable = true;
 
+    # Python
     servers.ruff = {
       enable = true;
       # activate = false;
     };
 
+    # Python
     servers.pylsp = {
       enable = true;
       # activate = false;
     };
 
-    servers.pyright = {
-      enable = true;
-      # activate = false;
-    };
+    # Python
+    servers.pyright.enable = false;
 
+    # <https://github.com/detachhead/basedpyright ⭐️1.1k 💾10.0k>
+    servers.basedpyright.enable = true;
+
+    servers.ansiblels.enable = true;
+
+    # Vimscript
+    servers.vimls.enable = true;
+
+    # Markdown
     servers.markdown_oxide = {
       enable = true;
       config = {
@@ -32,6 +41,7 @@
       };
     };
 
+    # Markdown
     servers.zk = {
       enable = true;
       config = {
@@ -39,13 +49,16 @@
       };
     };
 
-    servers.bashls = {
-      enable = true;
-    };
+    servers.bashls.enable = true;
 
-    servers.rust_analyzer = {
-      enable = true;
-    };
+    # Rust has rust-analyzer, bacon_ls 
+    # rust_analyzer should be installed by cargo though.
+    servers.rust_analyzer.enable = true;
+
+    servers.clangd.enable = true;
+
+    # <https://github.com/terror/just-lsp ⭐️0.2k 💾0.2k>
+    servers.just.enable = true;
 
     servers.emmylua_ls = {
       enable = true;
@@ -168,12 +181,8 @@
       nixd.enable = true;
       nil_ls.enable = true;
 
-      # CSS
+      # <https://github.com/tailwindlabs/tailwindcss-intellisense ⭐️3.4k 💾1.2k>
       tailwindcss.enable = true;
-      cssls = {
-        enable = true;
-        extraOptions.init_options.provideFormatter = false;
-      };
 
       # JSON
       jsonls.enable = true;
