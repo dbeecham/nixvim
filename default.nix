@@ -37,6 +37,7 @@
       ];
     }
 
+    ./mkview.nix
     ./ui/default.nix
     ./cmp/default.nix
     ./slime/default.nix
