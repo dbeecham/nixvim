@@ -62,7 +62,7 @@
 
     servers.emmylua_ls = {
       enable = true;
-      settings = {
+      config = {
         # cmd = "emmylua_ls";
         # filetypes = [ "lua" ];
         # root_markers = [ ".git/" ];
