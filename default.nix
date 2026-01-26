@@ -37,6 +37,7 @@
       ];
     }
 
+    ./performance.nix
     ./mkview.nix
     ./ui/default.nix
     ./cmp/default.nix
