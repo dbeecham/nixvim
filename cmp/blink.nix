@@ -24,6 +24,8 @@
       };
 
       completion = {
+        accept.auto_brackets.enabled = true;
+        keyword.range = "full";
         trigger = {
           show_in_snippet = true;
           show_on_keyword = true;
@@ -33,6 +35,7 @@
           auto_show = true;
           border = "rounded";
           draw = {
+            treesitter = [ "lsp" ];
             columns = lib.nixvim.mkRaw ''{
                 { "label", "label_description", gap = 1 },
                 { "kind_icon", "kind" }
@@ -78,6 +81,7 @@
         };
       };
       sources = {
+
         # Adding 'buffer' to the default causes every filetype to have the
         # buffer source, even when it's not specified in 'per_filetype'.
         default = [ "lsp" "path" "snippets" ];
@@ -88,6 +92,17 @@
         providers = {
           snippets.score_offset = 1; 
           buffer.score_offset = -5;
+
+          path = {
+            name = "path";
+            module = "blink.cmp.sources.path";
+            score_offset = 3;
+            opts = {
+              get_cwd = lib.nixvim.mkRaw "function(context) return vim.fn.expand(('#%d:p:h'):format(context.bufnr)) end";
+              show_hidden_files_by_default = false;
+              ignore_root_slash = true;
+            };
+          };
         };
       };
     };
