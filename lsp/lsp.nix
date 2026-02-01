@@ -60,6 +60,15 @@
     # <https://github.com/terror/just-lsp ⭐️0.2k 💾0.2k>
     servers.just.enable = true;
 
+    servers.html.enable = true;
+
+    # <https://github.com/luals/lua-language-server>
+    servers.lua_ls.enable = false;
+
+    # <https://github.com/johnnymorganz/stylua>
+    servers.stylua.enable = false;
+
+    # <https://github.com/EmmyLuaLs/emmylua-analyzer-rust>
     servers.emmylua_ls = {
       enable = true;
       config = {
