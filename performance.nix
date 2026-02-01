@@ -2,7 +2,7 @@
   performance = {
     byteCompileLua = {
       # Enable bytecode compilation for Lua files to improve startup time.
-      enable = true;
+      enable = false;
 
       # Enable bytecode compilation for configuration files.
       configs = true;
