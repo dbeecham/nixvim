@@ -390,6 +390,15 @@ with { inherit (lib.nixvim) mkRaw; };
       options.desc = "Toggle gutter";
     }
 
+    {
+      mode = "n";
+      key = "q";
+      action = ":q<cr>";
+      options = {
+        silent = true;
+        desc = "Quit";
+      };
+    }
   ];
 
   filetype.extension.flux = "flux";
