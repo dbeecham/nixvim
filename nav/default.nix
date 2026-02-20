@@ -3,7 +3,6 @@
   imports = [
     # ./tree-climber.nix
     ./aerial.nix
-    ./neotree.nix
   ];
 
   # <https://github.com/nvim-tree/nvim-tree.lua ⭐️8.1k 💾1.6k>
