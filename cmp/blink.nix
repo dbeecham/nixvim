@@ -130,6 +130,10 @@
         hide_during_completion = true;
         debounce = 15;
       };
+      panel = {
+        enabled = true;
+        auto_refresh = true;
+      };
       filetypes = {
         yaml = true;
         rust = true;
