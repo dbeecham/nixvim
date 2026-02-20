@@ -43,25 +43,4 @@
     };
   };
 
-  keymaps = [
-
-    { mode = "n"; key = "<leader>b"; action = ":Telescope buffers<cr>"; options.silent = true; options.desc = "symbols"; }
-
-    { 
-      mode = "n";
-      key = "<leader>f"; 
-      action = lib.nixvim.mkRaw ''
-        function()
-          require('telescope.builtin').find_files {
-            find_command = { "fd", "--type=f", "--follow", "--max-depth=8", "--max-results=10000", "--exclude=*.pyc", "--exclude=node_modules" }
-          }
-        end
-      '';
-      options = { silent = true; desc = "Find Files"; };
-    }
-
-    { mode = "n"; key = "<leader>g"; action = ":Telescope live_grep<cr>"; options.silent = true; options.desc = "Live Grep"; }
-  ];
-  
-
 }
