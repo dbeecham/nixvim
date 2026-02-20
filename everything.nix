@@ -399,6 +399,27 @@ with { inherit (lib.nixvim) mkRaw; };
         desc = "Quit";
       };
     }
+
+    {
+      mode = "n";
+      key = "<C-Tab>";
+      action = ":tabnext<cr>";
+      options = {
+        silent = true;
+        desc = "Next tab";
+      };
+    }
+
+    {
+      mode = "n";
+      key = "<C-S-Tab>";
+      action = ":tabprev<cr>";
+      options = {
+        silent = true;
+        desc = "Previous tab";
+      };
+    }
+
   ];
 
   filetype.extension.flux = "flux";
