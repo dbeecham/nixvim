@@ -13,12 +13,6 @@
               version = self.inputs.snacks-nvim.rev;
             });
 
-            markdown-table-mode = final.vimUtils.buildVimPlugin {
-              pname = "markdown-table-mode";
-              src = self.inputs.markdown-table-mode;
-              version = self.inputs.markdown-table-mode.rev;
-            };
-
           };
         })
       ];
