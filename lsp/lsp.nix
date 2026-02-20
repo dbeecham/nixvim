@@ -51,10 +51,6 @@
 
     servers.bashls.enable = true;
 
-    # Rust has rust-analyzer, bacon_ls 
-    # rust_analyzer should be installed by cargo though.
-    servers.rust_analyzer.enable = true;
-
     servers.clangd.enable = true;
 
     # <https://github.com/terror/just-lsp ⭐️0.2k 💾0.2k>
