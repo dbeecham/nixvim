@@ -14,7 +14,6 @@
       # Both blink.cmp and noice has auto signature help. Make sure to only use one.
       signature = {
         enabled = false;
-        window.border = "rounded";
       };
 
       cmdline = {
