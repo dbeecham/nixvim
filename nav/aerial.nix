@@ -1,4 +1,4 @@
-{
+{ config, lib, ... }: {
   # <https://github.com/stevearc/aerial.nvim ⭐️2.1k 💾0.8k>
   # lsp/treesitter/markdown/asciidoc/man based outline
   plugins.aerial = {
@@ -21,7 +21,7 @@
     }
   ];
 
-  extraConfigLuaPost = ''
+  extraConfigLuaPost = lib.mkIf config.plugins.which-key.enable ''
     require('which-key').add({
       { "<leader>a", group = "aerial", icon = { icon = "✨" } },
     })

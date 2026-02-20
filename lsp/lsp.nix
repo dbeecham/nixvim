@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 {
 
   lsp = {
@@ -223,7 +223,7 @@
   #     event = [ "TextChanged" "InsertLeave" "CursorHold" "BufEnter" ];
   # ];
 
-  extraConfigLuaPost = ''
+  extraConfigLuaPost = lib.optionalString config.plugins.which-key.enable ''
     require('which-key').add({
       { "<leader>ll", desc = "Code [L]ens", icon = "🔍" },
     })

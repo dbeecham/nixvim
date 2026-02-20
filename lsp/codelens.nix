@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 let nixvim = config.lib.nixvim; in
 {
 
@@ -8,7 +8,7 @@ let nixvim = config.lib.nixvim; in
       { mode = "n"; key = "<leader>llr"; action = nixvim.mkRaw "vim.lsp.codelens.run"; options.desc = "codelens:run"; }
     ];
 
-    extraConfigLuaPost = ''
+    extraConfigLuaPost = lib.mkIf config.plugins.which-key.enable ''
       require('which-key').add({
         { "<leader>ll", desc = "Code [L]ens", icon = "🔍" },
       })
