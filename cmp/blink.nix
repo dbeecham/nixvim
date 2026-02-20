@@ -32,7 +32,7 @@
         };
         menu = {
           auto_show = true;
-          border = "rounded";
+          border = "none";
           draw = {
             treesitter = [ "lsp" ];
             columns = lib.nixvim.mkRaw ''{
