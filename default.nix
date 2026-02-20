@@ -19,19 +19,6 @@
               version = self.inputs.markdown-table-mode.rev;
             };
 
-            # tree-climber-nvim = final.vimUtils.buildVimPlugin {
-            #   pname = "tree-climber-nvim";
-            #   src = self.inputs.tree-climber-nvim;
-            #   version = self.inputs.tree-climber-nvim.rev;
-            #   doCheck = false;
-            #   postInstall = ''
-            #     rm -f $out/Makefile
-            #     rm -f $out/README.md
-            #     rm -f $out/LICENSE
-            #     rm -rf $out/tests
-            #   '';
-            # };
-
           };
         })
       ];
