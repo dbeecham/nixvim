@@ -10,6 +10,7 @@
 
   extraPackagesAfter = with pkgs; [
     shellcheck
+    vale
   ];
 
 }
