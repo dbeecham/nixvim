@@ -44,26 +44,6 @@ with { inherit (lib.nixvim) mkRaw; };
     };
   };
 
-
-  # <https://github.com/nvim-treesitter/nvim-treesitter-textobjects ⭐️2.5k 💾0.6k>
-  plugins.treesitter-textobjects = {
-    enable = true;
-    settings = {
-      select = {
-        enable = true;
-        keymaps = {
-          "af" = "@function.outer";
-          "if" = "@function.inner";
-          "ac" = "@class.outer";
-          "ic" = "@class.inner";
-          "aC" = "@conditional.outer";
-          "iC" = "@conditional.inner";
-          "as" = "@local.scope";
-        };
-      };
-    };
-  };
-
   # <https://github.com/andrewferrier/debugprint.nvim ⭐️0.5k 💾1.0k>
   # The 'debugprint' plugin is a neat way to add debug prints to your code.
   # It's triggered by hitting 'g?p' to add a print statement below, and 'g?P'
