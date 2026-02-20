@@ -261,6 +261,20 @@ with { inherit (lib.nixvim) mkRaw; };
     }
 
     {
+      mode = [ "i" "n" ];
+      key = "<S-F13>";
+      action = lib.nixvim.mkRaw ''
+        function()
+          if require('copilot.suggestion').is_visible() then
+            require('copilot.suggestion').accept_line()
+          end
+        end
+      '';
+      options.silent = true;
+      options.desc = "Accept Copilot line suggestion";
+    }
+
+    {
       mode = "i";
       key = "<cr>";
       action = mkRaw ''
