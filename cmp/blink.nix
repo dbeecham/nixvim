@@ -145,9 +145,4 @@
     lazyLoad.settings.enabled = "not (vim.g.vscode or os.getenv('DISABLE_BLINK'))";
   };
 
-  plugins.blink-cmp-copilot = {
-    enable = false;
-    lazyLoad.settings.enabled = "not (vim.g.vscode or os.getenv('DISABLE_BLINK'))";
-  };
-
 }
