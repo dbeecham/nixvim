@@ -315,6 +315,14 @@ with { inherit (lib.nixvim) mkRaw; };
       options.desc = "Edit ~/.config/nvim/test.lua";
     }
 
+    # edit ~/.config/nvim/test.lua
+    { 
+      mode = "n"; 
+      key = "<leader>vl"; 
+      action = ":vsplit ~/.config/nvim/init.local.lua<cr>";
+      options.desc = "Edit init.local.lua";
+    }
+
     # Use gF to "forcefully" edit the file under the cursor, creating it if
     # it doesn't exist.
     {
