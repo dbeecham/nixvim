@@ -4,5 +4,6 @@
     # ./codelens.nix
     # ./hover.nix
     ./lint.nix
+    ./rust.nix
   ];
 }
