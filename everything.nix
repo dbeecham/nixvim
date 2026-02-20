@@ -247,7 +247,7 @@ with { inherit (lib.nixvim) mkRaw; };
     }
 
     {
-      mode = "i";
+      mode = [ "i" "n" ];
       key = "<F13>";
       action = lib.nixvim.mkRaw ''
         function()
