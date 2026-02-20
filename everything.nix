@@ -315,8 +315,6 @@ with { inherit (lib.nixvim) mkRaw; };
       options.desc = "Edit ~/.config/nvim/test.lua";
     }
 
-    { mode = "n"; key = "<leader>ct"; action = lib.nixvim.mkRaw "require('treesitter-context').toggle"; options.silent = true; options.desc = "Toggle treesitter context"; }
-
     # Use gF to "forcefully" edit the file under the cursor, creating it if
     # it doesn't exist.
     {
