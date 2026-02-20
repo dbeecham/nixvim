@@ -133,6 +133,9 @@
       panel.enabled = false;
       filetypes = {
         yaml = true;
+        rust = true;
+        lua = true;
+        css = true;
       };
     };
   };
