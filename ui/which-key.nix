@@ -1,12 +1,44 @@
 { lib, ... }: {
 
   # <https://github.com/folke/which-key.nvim ⭐️6.4k 💾0.7k>
+  # The config can be printed with
+  #   packages.aarch64-darwin.default.config.plugins.which-key.luaConfig.content
+  #   packages.aarch64-darwin.default.config.plugins.which-key.luaConfig.post
   plugins.which-key = {
     enable = true;
     settings = {
       delay = 0;
+      preset = "helix";
       win = {
-        border = "rounded";
+        no_overlap = true;
+        border = lib.nixvim.mkRaw "vim.g.neovide and 'none' or 'rounded'";
+        wo = {
+          winblend = lib.nixvim.mkRaw "vim.g.neovide and 50 or 0";
+        };
+        col = -8;
+        row = -2;
+        width = {
+          min = 30;
+          max = 60;
+        };
+        height = {
+          max = 30;
+        };
+        padding = [ 0 2 ];
+      };
+      layout = {
+        width = {
+          min = 10;
+          spacing = 5;
+          max = 30;
+        };
+      };
+
+      sort = [ "group" "manual" "order" ];
+
+      icons = {
+        group = "";
+        colors = false;
       };
 
       # mapping contains the following keys:
@@ -26,26 +58,26 @@
       # - scriptversion: no idea, seems to always be 1
       # - sid: no idea
       # - silent: seems to always be 1
-      filter = lib.nixvim.mkRaw ''
-        function(mapping)
-          -- If mapping.lhs is in this list of keys, return false
-          local excluded_keys = {
-            "vij",
-            "vik",
-          }
-          for _, key in ipairs(excluded_keys) do
-            if mapping.lhs == key then
-              return false
-            end
-          end
-          return true
-        end
-      '';
+      # filter = lib.nixvim.mkRaw ''
+      #   function(mapping)
+      #     -- If mapping.lhs is in this list of keys, return false
+      #     local excluded_keys = {
+      #       "vij",
+      #       "vik",
+      #     }
+      #     for _, key in ipairs(excluded_keys) do
+      #       if mapping.lhs == key then
+      #         return false
+      #       end
+      #     end
+      #     return true
+      #   end
+      # '';
     };
     # { "<leader>v", icon = { icon = require('mini.icons').get('filetype', 'vim') } },
     luaConfig.post = ''
       require('which-key').add({
-        { "<leader>v", icon = { icon = "✍️" } },
+        { "<leader>v", icon = { icon = "✍️" }, desc = "vim" },
         { "<leader>l", icon = "📌", desc = "lsp" },
         { "<leader>z", group = "zen", icon = { icon = "🧘" } },
         { "<leader>zd", group = "dim", icon = { icon = "💡" } },
