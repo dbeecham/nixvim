@@ -8,7 +8,7 @@
   };
 
   plugins.notify = {
-    enable = true;
+    enable = false;
   };
 
   # <https://github.com/folke/noice.nvim ⭐️5.3k 💾1.3k>
