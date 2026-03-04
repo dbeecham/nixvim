@@ -10,5 +10,6 @@
     ./which-key.nix
     ./gutter.nix
     ./theme/default.nix
+    ./color-picker.nix
   ];
 }
