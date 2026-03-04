@@ -117,7 +117,7 @@
     # Zoxide chdir
     {
       mode = "n";
-      key = "<leader>gz";
+      key = "gpz";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.zoxide({
@@ -143,7 +143,7 @@
     # Grep picker
     {
       mode = "n";
-      key = "<leader>gg";
+      key = "gpg";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.grep({
@@ -167,7 +167,7 @@
     # File picker
     {
       mode = "n";
-      key = "<leader>f";
+      key = "gpf";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.files({
