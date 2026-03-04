@@ -3,13 +3,14 @@
 
   imports = [
     # ./tables.nix
+    # ./markview.nix
   ];
 
   autoCmd = [
     {
       event = "FileType";
       pattern = "markdown";
-      command = "setlocal wrap linebreak";
+      command = "setlocal nowrap linebreak";
     }
   ];
 
