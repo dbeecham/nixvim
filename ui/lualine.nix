@@ -50,7 +50,6 @@
         lualine_y = lib.nixvim.mkRaw "{}";
         lualine_z = lib.nixvim.mkRaw "{}";
       };
-      tabline = lib.nixvim.mkRaw "{}";
     };
   };
 
