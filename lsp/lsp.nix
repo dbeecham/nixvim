@@ -16,6 +16,20 @@
       # activate = false;
     };
 
+    servers.rust_analyzer = {
+      enable = true;
+      config.settings."rust-analyzer" = {
+        imports = {
+          granularity = {
+            group = "module";
+          };
+          prefix = "self";
+        };
+        cargo.buildScripts.enable = true;
+        procMacro.enable = true;
+      };
+    };
+
     # Python
     servers.pyright.enable = false;
 
