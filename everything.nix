@@ -89,6 +89,8 @@ with { inherit (lib.nixvim) mkRaw; };
     #winminwidth = 35;
     wildmode = "longest:full,full,noselect";
 
+    signcolumn = "auto:2";
+
     # If not specified elsewhere, we use a 4-space tabstop.
     tabstop = 4;
     shiftwidth = 4;
@@ -465,4 +467,6 @@ with { inherit (lib.nixvim) mkRaw; };
 
   colorscheme = "lunix";
 
+
+  plugins.motd-nvim.enable = true; 
 }
