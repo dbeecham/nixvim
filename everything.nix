@@ -96,6 +96,9 @@ with { inherit (lib.nixvim) mkRaw; };
     expandtab = true;
     scrollback = 1000;
 
+    # Disable the `~` characters on empty lines after the end of the buffer.
+    fillchars = "eob: ";
+
     autochdir = false;
 
     # Required for nvim-notify
