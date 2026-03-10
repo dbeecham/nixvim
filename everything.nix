@@ -340,7 +340,7 @@ with { inherit (lib.nixvim) mkRaw; };
           vim.cmd.edit(path)
         end
       '';
-      options.desc = "Edit file under cursor, create it if necessary";
+      options.desc = "file:create";
     }
 
 

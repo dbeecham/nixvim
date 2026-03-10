@@ -93,6 +93,17 @@
       require('snacks').keymap.set('v', '<cr>', function()
         require('snacks').debug.run()
       end, { ft = 'lua' }) 
+      require('snacks').toggle.new({
+        id = 'tsvirtual_lines',
+        name = 'Virtual Lines',
+        get = function() 
+          return vim.diagnostic.config().virtual_lines
+        end,
+        set = function(state) 
+          vim.diagnostic.config({ virtual_lines = state })
+        end,
+      }):map('<leader>td')
+
     '' + lib.optionalString (config.plugins.treesitter-context.enable) ''
       require('snacks').toggle.new({
         id = 'tscontext',
@@ -108,17 +119,6 @@
           end
         end,
       }):map('<leader>th')
-
-      require('snacks').toggle.new({
-        id = 'tsvirtual_lines',
-        name = 'Virtual Lines',
-        get = function() 
-          return vim.diagnostic.config().virtual_lines
-        end,
-        set = function(state) 
-          vim.diagnostic.config({ virtual_lines = state })
-        end,
-      }):map('<leader>td')
 
       require('which-key').add({{'<leader>t', group = "Toggle"}})
     '';

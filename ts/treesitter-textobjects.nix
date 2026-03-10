@@ -14,7 +14,7 @@
         end
       '';
       options = {
-        desc = "Select around function";
+        desc = "function";
       };
     }
     {
@@ -26,7 +26,7 @@
         end
       '';
       options = {
-        desc = "@function";
+        desc = "function";
       };
     }
     {
@@ -38,7 +38,7 @@
         end
       '';
       options = {
-        desc = "@scope";
+        desc = "scope";
       };
     }
     {
@@ -50,7 +50,7 @@
         end
       '';
       options = {
-        desc = "Select around scope";
+        desc = "scope";
       };
     }
     {
@@ -62,19 +62,31 @@
         end
       '';
       options = {
-        desc = "Select around scope";
+        desc = "scope";
       };
     }
     {
       mode = "n";
-      key = "[m";
+      key = "[s";
+      action = lib.nixvim.mkRaw ''
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start({'@conditional.outer', '@loop.outer', '@function.outer'}, "textobjects")
+        end
+      '';
+      options = {
+        desc = "Previous scope";
+      };
+    }
+    {
+      mode = "n";
+      key = "]s";
       action = lib.nixvim.mkRaw ''
         function()
           require("nvim-treesitter-textobjects.move").goto_next_start({'@conditional.outer', '@loop.outer', '@function.outer'}, "textobjects")
         end
       '';
       options = {
-        desc = "Select around scope";
+        desc = "Previous scope";
       };
     }
   ];
