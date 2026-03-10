@@ -20,7 +20,7 @@
         row = -2;
         width = {
           min = 20;
-          max = 40;
+          max = 60;
         };
         height = {
           max = 30;
