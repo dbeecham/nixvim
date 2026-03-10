@@ -66,7 +66,7 @@
       };
     }
     {
-      mode = "n";
+      mode = ["o" "x" "n"];
       key = "[s";
       action = lib.nixvim.mkRaw ''
         function()
@@ -74,11 +74,11 @@
         end
       '';
       options = {
-        desc = "Previous scope";
+        desc = "@scope";
       };
     }
     {
-      mode = "n";
+      mode = ["o" "x" "n"];
       key = "]s";
       action = lib.nixvim.mkRaw ''
         function()
@@ -86,7 +86,7 @@
         end
       '';
       options = {
-        desc = "Previous scope";
+        desc = "@scope";
       };
     }
   ];
