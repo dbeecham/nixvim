@@ -8,6 +8,11 @@
   # The 'gitsigns.nvim' plugin displays git signs in the gutter.
   plugins.gitsigns = {
       enable = true;
+      settings = {
+        signcolumn = true;
+        auto_attach = true;
+        attach_to_untracked = true;
+      };
   };
 
   # <https://github.com/chentoast/marks.nvim ⭐️1.1k 💾70>
