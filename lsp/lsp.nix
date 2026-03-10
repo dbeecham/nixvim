@@ -237,25 +237,4 @@
   #     '';
   #     event = [ "TextChanged" "InsertLeave" "CursorHold" "BufEnter" ];
   # ];
-
-  extraConfigLuaPost = lib.optionalString config.plugins.which-key.enable ''
-    require('which-key').add({
-      { "<leader>ll", desc = "Code [L]ens", icon = "🔍" },
-    })
-  '';
-
-  keymaps = [
-    { 
-      mode = "n"; 
-      key = "<leader>ld"; 
-      action = lib.nixvim.mkRaw ''
-        function()
-          local new_config = not vim.diagnostic.config().virtual_lines
-          vim.diagnostic.config({ virtual_lines = new_config })
-        end
-      '';
-      options.desc = "Toggle diagnostics";
-    }
-  ];
 }
-

@@ -83,13 +83,13 @@
     };
 
     luaConfig.post = ''
-      require('snacks').toggle.option('wrap', { name = "Wrap Lines" }):map('<leader>uw')
-      require('snacks').toggle.dim():map('<leader>ud')
-      require('snacks').toggle.diagnostics():map('<leader>uD')
-      require('snacks').toggle.line_number():map('<leader>un')
-      require('snacks').toggle.inlay_hints():map('<leader>uh')
-      require('snacks').toggle.zoom():map('<leader>uZ')
-      require('snacks').toggle.zen():map('<leader>uz')
+      require('snacks').toggle.option('wrap', { name = "Wrap Lines" }):map('<leader>tw')
+      require('snacks').toggle.dim():map('<leader>tzd')
+      require('snacks').toggle.diagnostics():map('<leader>tD')
+      require('snacks').toggle.line_number():map('<leader>tn')
+      require('snacks').toggle.inlay_hints():map('<leader>th')
+      require('snacks').toggle.zoom():map('<leader>tZ')
+      require('snacks').toggle.zen():map('<leader>tzz')
       require('snacks').keymap.set('v', '<cr>', function()
         require('snacks').debug.run()
       end, { ft = 'lua' }) 
@@ -107,7 +107,20 @@
             return require("treesitter-context").disable() 
           end
         end,
-      }):map('<leader>uh')
+      }):map('<leader>th')
+
+      require('snacks').toggle.new({
+        id = 'tsvirtual_lines',
+        name = 'Virtual Lines',
+        get = function() 
+          return vim.diagnostic.config().virtual_lines
+        end,
+        set = function(state) 
+          vim.diagnostic.config({ virtual_lines = state })
+        end,
+      }):map('<leader>td')
+
+      require('which-key').add({{'<leader>t', group = "Toggle"}})
     '';
 
   };
@@ -255,7 +268,7 @@
     # Diagnostics
     {
       mode = "n";
-      key = "<leader>gd";
+      key = "<leader>gD";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.diagnostics()
