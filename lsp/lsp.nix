@@ -202,6 +202,7 @@
 
       # <https://github.com/tailwindlabs/tailwindcss-intellisense ⭐️3.4k 💾1.2k>
       tailwindcss.enable = true;
+      cssls.enable = true;
 
       # JSON
       jsonls.enable = true;
