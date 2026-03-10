@@ -411,6 +411,49 @@ with { inherit (lib.nixvim) mkRaw; };
       };
     }
 
+    {
+      mode = ["i" "v"];
+      key = "<tab>";
+      action = lib.nixvim.mkRaw ''
+        function()
+
+          local luasnip = require('luasnip');
+          local blink = require('blink-cmp');
+
+          -- I always want to expand snippets if possible.
+          if luasnip.expandable() then
+            vim.schedule(luasnip.expand)
+            return
+          end
+
+          if luasnip.choice_active() then
+            vim.schedule(function() luasnip.jump(1) end)
+            return
+          end
+
+          if luasnip.jumpable(1) then
+            vim.schedule(function() luasnip.jump(1) end)
+            return
+          end
+
+          if blink.is_visible() then
+            blink.select_and_accept()
+            return
+          end
+
+          -- Feed the tab character as normal
+          -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, false, true), 'i', true)
+          return '<Tab>'
+        end
+      '';
+      options = {
+        silent = true;
+        desc = "Tab!";
+        expr = true;
+      };
+    }
+
+
   ];
 
   filetype.extension.flux = "flux";
