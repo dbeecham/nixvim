@@ -12,6 +12,10 @@
         signcolumn = true;
         auto_attach = true;
         attach_to_untracked = true;
+
+        # Git signs priority needs to be higher than the marks priority,
+        # otherwise the git signs are "shifted in", and it looks really weird.
+        sign_priority = 30;
       };
   };
 
@@ -24,6 +28,12 @@
         excluded_filetypes = [
           "netrw"
         ];
+        sign_priority = {
+          lower = 10;
+          upper = 15;
+          builtin = 8;
+          bookmark = 20;
+        };
       };
   };
 
