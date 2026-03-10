@@ -3,7 +3,7 @@
 
   imports = [
     # ./tables.nix
-    # ./markview.nix
+    ./markview.nix
   ];
 
   autoCmd = [
