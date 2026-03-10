@@ -25,7 +25,10 @@
         # blink.cmp overrides noice signature help.
         signature.enabled = true;
         hover.enabled = true;
-        progress.enabled = true;
+
+        # LSP progress is shown with fidget.nvim.
+        progress.enabled = false;
+
         documentation = {
           opts = {
             border.style = "rounded";
