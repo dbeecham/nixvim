@@ -81,8 +81,8 @@ with { inherit (lib.nixvim) mkRaw; };
     # Prefer manual folding using 'zf', 'zd', 'zo', etc.
     foldmethod = "manual";
 
-    number = true;
-    relativenumber = true;
+    number = false;
+    relativenumber = false;
     wrap = false;
     conceallevel = 2;
     #winwidth = 100;
