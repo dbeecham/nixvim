@@ -3,6 +3,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/HEAD";
     nixvim.url = "github:nix-community/nixvim/HEAD";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    motd-nvim.url = "git+file://../../motd-nvim";
 
     # some vim plugins I have personal version control of due to slow updates upstream
     snacks-nvim = {
@@ -16,18 +17,25 @@
 
   };
 
-  outputs = { self, nixpkgs, nixvim, ... }: 
+  outputs = inputs@{ self, nixpkgs, nixvim, ... }: 
   let
     forAllSystems = f:
       nixpkgs.lib.genAttrs
         [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ]
-        (system: f { pkgs = import nixpkgs { inherit system; config.allowUnfree = true; }; nixvim = nixvim.legacyPackages.${system}; });
+        (system: f { 
+          inherit self inputs;
+          pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+          nixvim = nixvim.legacyPackages.${system};
+        });
   in {
 
-    packages = forAllSystems ({ pkgs, nixvim }: rec {
+    packages = forAllSystems ({ pkgs, nixvim, self, inputs }: rec {
       default = nixvim.makeNixvimWithModule {
         inherit pkgs;
-        module = ./default.nix;
+        module.imports = [
+          inputs.motd-nvim.nixvimModules.default
+          ./default.nix
+        ];
         extraSpecialArgs = { inherit self; };
       };
       "default.config.build.initFile" = default.config.build.initFile;
