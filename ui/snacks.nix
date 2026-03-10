@@ -83,12 +83,12 @@
     };
 
     luaConfig.post = ''
-      require('snacks').toggle.option('wrap', { name = "Wrap Lines" }):map('<leader>tw')
-      require('snacks').toggle.dim():map('<leader>tzd')
-      require('snacks').toggle.diagnostics():map('<leader>tD')
-      require('snacks').toggle.line_number():map('<leader>tn')
-      require('snacks').toggle.inlay_hints():map('<leader>th')
+      require('snacks').toggle.option('wrap', { name = "Wrap Lines" }):map('<leader>uw')
+      require('snacks').toggle.diagnostics():map('<leader>uD')
+      require('snacks').toggle.line_number():map('<leader>un')
+      require('snacks').toggle.inlay_hints():map('<leader>uh')
       require('snacks').toggle.zoom():map('<leader>tZ')
+      require('snacks').toggle.dim():map('<leader>uzd')
       require('snacks').toggle.zen():map('<leader>tzz')
       require('snacks').keymap.set('v', '<cr>', function()
         require('snacks').debug.run()
@@ -102,7 +102,49 @@
         set = function(state) 
           vim.diagnostic.config({ virtual_lines = state })
         end,
-      }):map('<leader>td')
+      }):map('<leader>ud')
+
+      -- Git signs
+      require('snacks').toggle.new({
+        id = 'gitsigns',
+        name = 'Git Signs',
+        get = function() return require('gitsigns.config').config.signcolumn end,
+        set = function(state)
+          if state == true and not require('gitsigns.config').config.signcolumn then
+            require('gitsigns').toggle_signs()
+          elseif state == false and require('gitsigns.config').config.signcolumn then
+            require('gitsigns').toggle_signs()
+          end
+        end,
+      }):map('<leader>ug')
+
+      -- Git current line blame toggle
+      require('snacks').toggle.new({
+        id = 'gitsigns',
+        name = 'Git Line Blame',
+        get = function() return require('gitsigns.config').config.current_line_blame end,
+        set = function(state)
+          if state == true and not require('gitsigns.config').config.current_line_blame then
+            require('gitsigns').toggle_current_line_blame()
+          elseif state == false and require('gitsigns.config').config.current_line_blame then
+            require('gitsigns').toggle_current_line_blame()
+          end
+        end,
+      }):map('<leader>uGl')
+
+      -- Git word diff toggle
+      require('snacks').toggle.new({
+        id = 'gitsigns',
+        name = 'Git Word Diff',
+        get = function() return require('gitsigns.config').config.word_diff end,
+        set = function(state)
+          if state == true and not require('gitsigns.config').config.word_diff then
+            require('gitsigns').toggle_word_diff()
+          elseif state == false and require('gitsigns.config').config.word_diff then
+            require('gitsigns').toggle_word_diff()
+          end
+        end,
+      }):map('<leader>uGw')
 
     '' + lib.optionalString (config.plugins.treesitter-context.enable) ''
       require('snacks').toggle.new({
@@ -118,9 +160,9 @@
             return require("treesitter-context").disable() 
           end
         end,
-      }):map('<leader>th')
+      }):map('<leader>uh')
 
-      require('which-key').add({{'<leader>t', group = "Toggle"}})
+      require('which-key').add({{'<leader>u', group = "Toggle"}})
     '';
 
   };
