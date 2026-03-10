@@ -117,7 +117,7 @@
     # Zoxide chdir
     {
       mode = "n";
-      key = "gpz";
+      key = "<leader>z";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.zoxide({
@@ -143,7 +143,7 @@
     # Grep picker
     {
       mode = "n";
-      key = "gpg";
+      key = "<leader>gg";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.grep({
@@ -167,7 +167,7 @@
     # File picker
     {
       mode = "n";
-      key = "gpf";
+      key = "<leader>f";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.files({
@@ -207,7 +207,7 @@
     # Buffer picker
     {
       mode = "n";
-      key = "gb";
+      key = "<leader>b";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.buffers()
@@ -223,7 +223,7 @@
     # Recent files
     {
       mode = "n";
-      key = "gpr";
+      key = "<leader>gr";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.recent()
@@ -239,7 +239,7 @@
     # Highlight groups
     {
       mode = "n";
-      key = "gph";
+      key = "<leader>gh";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.highlights()
@@ -255,7 +255,7 @@
     # Diagnostics
     {
       mode = "n";
-      key = "gpd";
+      key = "<leader>gd";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.diagnostics()
@@ -271,7 +271,7 @@
     # Projects
     {
       mode = "n";
-      key = "gpp";
+      key = "<leader>gp";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').picker.projects({
@@ -287,10 +287,10 @@
       };
     }
 
-    # Scratch Buffer
+    # Lua Scratch Buffer
     {
       mode = "n";
-      key = "g.";
+      key = "<leader>.";
       action = lib.nixvim.mkRaw ''
         function()
           require('snacks').scratch({
