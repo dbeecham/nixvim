@@ -9,13 +9,10 @@
       url = "github:folke/snacks.nvim";
       flake = false;
     };
-    # tree-climber-nvim = {
-    #   url = "github:drybalka/tree-climber.nvim";
-    # };
-    # markdown-table-mode = {
-    #   url = "github:Kicamon/markdown-table-mode.nvim";
-    #   flake = false;
-    # };
+    direnv-nvim = {
+      url = "github:NotAShelf/direnv.nvim";
+      flake = false;
+    };
 
   };
 
@@ -24,7 +21,7 @@
     forAllSystems = f:
       nixpkgs.lib.genAttrs
         [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ]
-        (system: f { pkgs = nixpkgs.legacyPackages.${system}; nixvim = nixvim.legacyPackages.${system}; });
+        (system: f { pkgs = import nixpkgs { inherit system; config.allowUnfree = true; }; nixvim = nixvim.legacyPackages.${system}; });
   in {
 
     packages = forAllSystems ({ pkgs, nixvim }: rec {
