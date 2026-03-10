@@ -362,28 +362,6 @@ with { inherit (lib.nixvim) mkRaw; };
     #   options.expr = true;
     # }
 
-    # Enable and disable the gutter with <leader>s
-    {
-      mode = "n";
-      key = "<leader>s";
-      action = lib.nixvim.mkRaw ''
-        function()
-          if vim.wo.number then
-            vim.wo.number = false
-            vim.wo.relativenumber = false
-            vim.wo.signcolumn = "no"
-            vim.wo.foldcolumn = "0"
-          else
-            vim.wo.number = true
-            vim.wo.relativenumber = true
-            vim.wo.signcolumn = "auto"
-            vim.wo.foldcolumn = "1"
-          end
-        end
-      '';
-      options.desc = "Toggle gutter";
-    }
-
     {
       mode = "n";
       key = "q";
