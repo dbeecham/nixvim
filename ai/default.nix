@@ -4,5 +4,6 @@
     ./codecompanion.nix
     ./avante.nix
     ./copilot.nix
+    ./agentic.nix
   ];
 }
