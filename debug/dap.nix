@@ -1,7 +1,7 @@
 { lib, pkgs, ... }: {
 
   plugins.dap = {
-    enable = true;
+    enable = false;
     configurations = {
       lua = [{
         type = "nlua";
@@ -10,16 +10,19 @@
       }];
     };
     adapters = {
-      nlua.__raw = ''
-        function(callback, config)
-          callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
-        end
-      '';
+      servers = {
+        nlua.__raw = ''
+          function(callback, config)
+            callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+          end
+        '';
+        
+      };
     };
   };
 
   plugins.dap-virtual-text = {
-    enable = true;
+    enable = false;
   };
 
   extraPlugins = with pkgs.vimPlugins; [
