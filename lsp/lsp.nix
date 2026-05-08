@@ -34,7 +34,7 @@
     servers.pyright.enable = false;
 
     # <https://github.com/detachhead/basedpyright ⭐️1.1k 💾10.0k>
-    servers.basedpyright.enable = false;
+    servers.basedpyright.enable = true;
 
     servers.ansiblels.enable = true;
 
