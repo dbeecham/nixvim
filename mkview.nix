@@ -16,7 +16,7 @@
     {
       group = "view";
       event = [ "CursorHold" "CursorHoldI" ]; # see 'updatetime'
-      pattern = [ "*.nix" "*.c" "*.yaml" "*.yml" "*.md" "*.py" "*.css" "*.html" "*.js" "*.lua" "*.rs" ".sass" ".scss" ];
+      pattern = [ "*.nix" "*.c" "*.yaml" "*.yml" "*.md" "*.py" "*.css" "*.html" "*.js" "*.lua" "*.rs" ".sass" ".scss" "*.fish" ];
       command = "if &buftype == '' | silent! mkview | endif";
     }
 
@@ -24,7 +24,7 @@
     {
       group = "view";
       event = [ "BufWinLeave" "FocusLost" "VimLeavePre" ];
-      pattern = [ "*.nix" "*.c" "*.yaml" "*.yml" "*.md" "*.py" "*.css" "*.html" "*.js" "*.lua" "*.rs" ".sass" ".scss"];
+      pattern = [ "*.nix" "*.c" "*.yaml" "*.yml" "*.md" "*.py" "*.css" "*.html" "*.js" "*.lua" "*.rs" ".sass" ".scss" "*.fish" ];
       command = "if &buftype == '' | silent! mkview | endif";
     }
 
@@ -33,7 +33,7 @@
       group = "view";
       command = "silent! loadview";
       event = "FileType";
-      pattern = [ "nix" "c" "yaml" "markdown" "python" "css" "html" "javascript" "lua" "rust" "sass" "scss" ];
+      pattern = [ "nix" "c" "yaml" "markdown" "python" "css" "html" "javascript" "lua" "rust" "sass" "scss" "fish" ];
     }
 
     # Resize all windows when the Vim window is resized
