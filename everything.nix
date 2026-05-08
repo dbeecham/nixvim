@@ -251,7 +251,7 @@ with { inherit (lib.nixvim) mkRaw; };
       action = lib.nixvim.mkRaw ''
         function()
           if require('copilot.suggestion').is_visible() then
-            require('copilot.suggestion').accept_line()
+            require('copilot.suggestion').accept_word()
           end
         end
       '';
