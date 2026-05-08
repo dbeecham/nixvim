@@ -1,10 +1,10 @@
-{ lib, ... }: {
+{ lib, config, ... }: {
   # <https://github.com/nvim-treesitter/nvim-treesitter-textobjects ⭐️2.5k 💾0.6k>
   plugins.treesitter-textobjects = {
-    enable = true;
+    enable = false;
   };
 
-  keymaps = [
+  keymaps = lib.optionals config.plugins.treesitter-textobjects.enable [
     {
       mode = [ "o" "x" ];
       key = "af";
