@@ -435,12 +435,11 @@ with { inherit (lib.nixvim) mkRaw; };
         expr = true;
       };
     }
-
-
   ];
 
   filetype.extension.flux = "flux";
 
+  
 
   extraConfigLuaPre = ''
     -- Opening nvim in a terminal within nvim is pain when esc is mapped to 
@@ -469,4 +468,8 @@ with { inherit (lib.nixvim) mkRaw; };
 
 
   plugins.motd-nvim.enable = true; 
+
+  plugins.dbee = {
+    enable = true;
+  };
 }
