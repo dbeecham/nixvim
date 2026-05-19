@@ -83,41 +83,7 @@
         "type": "github"
       }
     },
-    "motd-nvim": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "lastModified": 1773138780,
-        "narHash": "sha256-24o3GBSXWKRjbGC0uPWb0rJDmvPS0Bb+AvwXK9ul0cY=",
-        "owner": "dbeecham",
-        "repo": "motd.nvim",
-        "rev": "abbb23adfd73d6ed0d63eec9828c52d65a1244b6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "dbeecham",
-        "repo": "motd.nvim",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1772956932,
-        "narHash": "sha256-M0yS4AafhKxPPmOHGqIV0iKxgNO8bHDWdl1kOwGBwRY=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "608d0cadfed240589a7eea422407a547ad626a14",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1778003029,
         "narHash": "sha256-q/nkKLDtHIyLjZpKhWk3cSK5IYsFqtMd6UtXF3ddjgA=",
@@ -133,7 +99,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1768323494,
         "narHash": "sha256-yBXJLE6WCtrGo7LKiB6NOt6nisBEEkguC/lq/rP3zRQ=",
@@ -152,7 +118,7 @@
     "nixvim": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nuschtosSearch": "nuschtosSearch",
         "systems": "systems_2"
       },
@@ -197,8 +163,7 @@
     "root": {
       "inputs": {
         "direnv-nvim": "direnv-nvim",
-        "motd-nvim": "motd-nvim",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "snacks-nvim": "snacks-nvim"
       }

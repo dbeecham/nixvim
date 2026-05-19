@@ -2,7 +2,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixvim.url = "github:nix-community/nixvim/nixos-25.11";
-    motd-nvim.url = "github:dbeecham/motd.nvim";
 
     # some vim plugins I have personal version control of due to slow updates upstream
     snacks-nvim = {
@@ -33,6 +32,7 @@
         inherit pkgs;
         module.imports = [
           ./modules/motd.nvim/default.nix
+          ./modules/direnv.nvim/default.nix
           ./default.nix
         ];
         extraSpecialArgs = { inherit self; };
