@@ -146,6 +146,20 @@
         end,
       }):map('<leader>uGw')
 
+      -- Aerial
+      require('snacks').toggle.new({
+        id = 'aerial',
+        name = 'Aerial',
+        get = function() return require('aerial').is_open() end,
+        set = function(state)
+          if state == true then
+            require('aerial').open()
+          else
+            require('aerial').close()
+          end
+        end,
+      }):map('<leader>ua')
+
     '' + lib.optionalString (config.plugins.treesitter-context.enable) ''
       require('snacks').toggle.new({
         id = 'tscontext',
