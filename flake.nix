@@ -32,7 +32,7 @@
       default = nixvim.makeNixvimWithModule {
         inherit pkgs;
         module.imports = [
-          inputs.motd-nvim.nixvimModules.default
+          ./modules/motd.nvim/default.nix
           ./default.nix
         ];
         extraSpecialArgs = { inherit self; };
