@@ -1,18 +1,16 @@
-.PHONY: default
-default: result
+# All sources
+SRCS := $(shell fd --type f --extension lua) flake.lock
 
-.PHONY: result
-result:
+# Default target
+.PHONY: nixvim
+nixvim: .stamp-build
+
+# We use stamp file since nix builds have timestamp 1970-01-01 and will always
+# trigger rebuilds
+.stamp-build: $(SRCS)
 	nom build .
+	touch $@
 
 .PHONY: init.lua
-init.lua:
-	nix build .#default.config.build.initFile --out-link init.lua
-
-.PHONY: init.snacks.lua
-init.snacks.lua:
-	nix eval --json .#default.config.plugins.snacks.luaConfig | jq -r '[.pre, .content, .post] | join("\n")' > $@
-
-.PHONY: init.which-key.lua
-init.which-key.lua:
-	nix eval --json .#default.config.plugins.which-key.luaConfig | jq -r '[.pre, .content, .post] | join("\n")' > $@
+init.lua: result
+	./result/bin/nixvim-print-init
