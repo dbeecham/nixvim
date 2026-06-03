@@ -1,5 +1,5 @@
 # All sources
-SRCS := $(shell fd --type f --extension lua) flake.lock
+SRCS := $(shell fd --type f --extension nix) flake.lock
 
 # Default target
 .PHONY: nixvim
