@@ -38,6 +38,7 @@
     ./lsp/default.nix
     ./debug/default.nix
     ./build/default.nix
+    ./bindings.nix
     ./everything.nix
 
   ];
