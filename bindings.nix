@@ -11,5 +11,19 @@
         end
       '';
     }
+
+    # Tab navigation with Ctrl-Tab and Ctrl-Shift-Tab
+    {
+      mode = [ "n" ];
+      key = "<C-Tab>";
+      options = { noremap = true; };
+      action = ":tabnext<CR>";
+    }
+    {
+      mode = [ "n" ];
+      key = "<C-S-Tab>";
+      options = { noremap = true; };
+      action = ":tabprevious<CR>";
+    }
   ];
 }
