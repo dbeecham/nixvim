@@ -13,8 +13,7 @@
   #  teardown
   #  toggle_auto_trigger
   plugins.copilot-lua = {
-    enable = true;
-    lazyLoad.settings.enabled = "not vim.g.vscode";
+    enable = false;
     settings = {
       suggestion = {
         enabled = true;
