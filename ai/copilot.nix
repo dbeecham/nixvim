@@ -13,7 +13,7 @@
   #  teardown
   #  toggle_auto_trigger
   plugins.copilot-lua = {
-    enable = false;
+    enable = true;
     settings = {
       suggestion = {
         enabled = true;
