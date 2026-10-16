@@ -2,7 +2,7 @@
   # <https://github.com/OXY2DEV/markview.nvim ⭐️2.8k 💾0.6k>
   # Markdown renderer in neovim. Used by codecompanion.
   plugins.markview = {
-    enable = true;
+    enable = false;
     settings = {
       markdown = {
         enable = true;
@@ -18,7 +18,7 @@
             sign_hl = "MarkviewHeading1";
           };
           heading_2 = {
-            style = "label";
+            style = "simple";
             align = "left";
             icon = "";
             corner_left = "   ";
@@ -27,7 +27,7 @@
             sign_hl = "MarkviewHeading2";
           };
           heading_3 = {
-            style = "label";
+            style = "simple";
             align = "left";
             icon = "";
           };
@@ -40,7 +40,7 @@
           };
         };
         code_blocks = {
-          style = "block"; # simple, block
+          style = "simple"; # simple, block
           min_width = 35;
           pad_amount = 4;
           sign = true;
