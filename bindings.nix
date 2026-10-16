@@ -1,9 +1,12 @@
-{
+{ lib, ... }: {
   keymaps = [
+
+    # Display syntax highlighting information on shift-click
     {
+      mode = [ "n" ];
       key = "<S-LeftMouse>";
-      options = { noremap = true; silent = true; };
-      action = ''
+      options = { noremap = true; };
+      action = lib.nixvim.mkRaw ''
         function()
           local mp = vim.fn.getmousepos()
           local buf = vim.api.nvim_win_get_buf(mp.winid)
