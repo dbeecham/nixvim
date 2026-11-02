@@ -102,6 +102,14 @@
               ignore_root_slash = true;
             };
           };
+
+          avante_commands = {
+            name = "avante_commands";
+            module = "blink.compat.source";
+            score_offset = 90; # show at a higher priority than lsp
+            opts = { };
+          };
+
         };
       };
     };
