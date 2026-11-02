@@ -1,6 +1,6 @@
 { pkgs, ... }: {
 
-  colorscheme = "lunix";
+  colorscheme = "seoulbones";
 
   plugins.colorizer = {
     enable = true;
