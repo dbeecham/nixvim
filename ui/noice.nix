@@ -18,9 +18,12 @@
     lazyLoad.settings.enabled = "not vim.g.vscode and not package.loaded['noice']";
 
     settings = {
-      # presets = {
-      #   lsp_doc_border = true;
-      # };
+      presets = {
+        # I very often get errors like `Lua: ...ped-0.12.5/share/nvim/runtime/lua/vim/lsp/inlay_hint.lua:362: Invalid 'col': out of range`
+        # which is incredibly annoying. This should fix that?
+        long_message_to_split = true;
+      };
+      
       lsp = {
         # blink.cmp overrides noice signature help.
         signature.enabled = true;
@@ -66,6 +69,13 @@
           opts.skip = true;
         }
       ];
+
+
+      # I tried this first as a way to get rid of the annoying truncated paths on errors, but it doesn't work, and it makes errors very annoying.
+      # messages = {
+      #   view_error = "split";
+      # };
+
     };
   };
 
