@@ -84,7 +84,8 @@ with { inherit (lib.nixvim) mkRaw; };
     number = false;
     relativenumber = false;
     wrap = false;
-    conceallevel = 2;
+    conceallevel = 0;
+    concealcursor = "";
     #winwidth = 100;
     #winminwidth = 35;
     wildmode = "longest:full,full,noselect";
@@ -146,6 +147,12 @@ with { inherit (lib.nixvim) mkRaw; };
     # Make Ctrl-A go to the beginning of the command line in command mode
     { mode = "c"; key = "<c-a>"; action = "<home>"; }
 
+    # Ctrl-hjkl to move between windows
+    { mode = "n"; key = "<C-h>"; action = "<C-w>h"; }
+    { mode = "n"; key = "<C-j>"; action = "<C-w>j"; }
+    { mode = "n"; key = "<C-k>"; action = "<C-w>k"; }
+    { mode = "n"; key = "<C-l>"; action = "<C-w>l"; }
+
     # Getting out of the terminal mode is hard on swedish keyboard layouts. Using
     # escape here is not ideal, since terminal applications may want it, but
     # it's better than nothing. M-c only works for... well-configured terminals.
@@ -156,7 +163,15 @@ with { inherit (lib.nixvim) mkRaw; };
     # saving. I'm currently feeling like it gives me less finger strain. It's
     # pretty comfy. Note to self: if I do regret this, write it down.
     # It's because it's already bound to record macro.
-    { mode = "n"; key = "q"; action = ":q<cr>"; options = { silent = true; }; }
+    #
+    # Okay, I've changed my mind. I'm dropping the q map and using the default
+    # q for recording macros. Two reasons:
+    # 1. In terminal mode, q is used to close pagers. If you happen to be in
+    #    normal mode when you try to close a pager, the window closes.
+    # 2. In normal mode, q is used to record macros. I'd rather have it
+    # available for the rare occasion when I want to record a macro than to
+    #    have it bound to quit.
+    # { mode = "n"; key = "q"; action = ":q<cr>"; options = { silent = true; }; }
     { mode = "n"; key = "Q"; action = ":cquit<cr>"; }
 
 
@@ -366,16 +381,6 @@ with { inherit (lib.nixvim) mkRaw; };
 
     {
       mode = "n";
-      key = "q";
-      action = ":q<cr>";
-      options = {
-        silent = true;
-        desc = "Quit";
-      };
-    }
-
-    {
-      mode = "n";
       key = "<C-Tab>";
       action = ":tabnext<cr>";
       options = {
@@ -463,8 +468,6 @@ with { inherit (lib.nixvim) mkRaw; };
       dofile(vim.fn.stdpath("config") .. "/init.post.lua")
     end
   '';
-
-  colorscheme = "lunix";
 
 
   plugins.motd-nvim.enable = true; 
