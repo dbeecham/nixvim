@@ -1,9 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixvim.url = "github:nix-community/nixvim/nixos-25.11";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixvim.url = "github:nix-community/nixvim";
 
     # some vim plugins I have personal version control of due to slow updates upstream
+    avante.url = "github:avante-corp/avante.nvim/v0.5.0";
     snacks-nvim = {
       url = "github:folke/snacks.nvim";
       flake = false;
@@ -15,30 +16,23 @@
 
   };
 
-  outputs = inputs@{ self, nixpkgs, nixvim, ... }: 
-  let
-    forAllSystems = f:
-      nixpkgs.lib.genAttrs
-        [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ]
-        (system: f { 
-          inherit self inputs;
-          pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
-          nixvim = nixvim.legacyPackages.${system};
-        });
-  in {
+  outputs = { self, nixvim, ... }: {
 
-    packages = forAllSystems ({ pkgs, nixvim, self, inputs }: rec {
-      default = nixvim.makeNixvimWithModule {
-        inherit pkgs;
-        module.imports = [
-          ./modules/motd.nvim/default.nix
-          ./modules/direnv.nvim/default.nix
-          ./default.nix
-        ];
-        extraSpecialArgs = { inherit self; };
-      };
-      "default.config.build.initFile" = default.config.build.initFile;
-    });
+    inherit nixvim;
+
+    # nixvim.legacyPackages.aarch64-darwin.makeNixvimWithModule
+
+    packages.aarch64-darwin.default =
+    let
+      pkgs = nixvim.legacyPackages.aarch64-darwin;
+    in pkgs.makeNixvimWithModule {
+      module.imports = [
+        ./modules/motd.nvim/default.nix
+        ./modules/direnv.nvim/default.nix
+        ./default.nix
+      ];
+      extraSpecialArgs = { inherit self; };
+    };
 
     nixosModules.default = { ... }: {
       nixpkgs.overlays = [(final: prev: {
