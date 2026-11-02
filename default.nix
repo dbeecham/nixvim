@@ -1,6 +1,8 @@
 { self, ... }: 
 {
 
+  nixpkgs.config.allowUnfree = true;
+
   imports = [ 
 
     {
@@ -13,12 +15,11 @@
               version = self.inputs.snacks-nvim.rev;
             });
 
-             direnv-nvim = prev.vimUtils.buildVimPlugin {
+            direnv-nvim = prev.vimUtils.buildVimPlugin {
               pname = "direnv-nvim";
               src = self.inputs.direnv-nvim;
               version = self.inputs.direnv-nvim.rev;
             };
-
           };
         })
       ];
