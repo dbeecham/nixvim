@@ -76,6 +76,7 @@
     servers.lua_ls.enable = false;
 
     # <https://github.com/johnnymorganz/stylua>
+    # stylua is a code formatter for Lua
     servers.stylua.enable = false;
 
     # <https://github.com/EmmyLuaLs/emmylua-analyzer-rust>
