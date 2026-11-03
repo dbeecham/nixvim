@@ -8,15 +8,15 @@
   # Extends vim's `%` motion to match more than just parentheses, and
   # provides additional text objects for matching pairs.
   plugins.vim-matchup = {
-    enable = false;
-    # I use sandwich for surround, so disable it in vim-matchup
+    enable = true;
+    # I use mini.surround for surround, so disable it in vim-matchup
     settings.surround_enabled = 0;
   };
   
   # <https://github.com/machakann/vim-sandwich ⭐️1.5k 💾0.5k>
   # sandwich is a plugin that allows you to easily add, change, and delete
   # surrounding characters in your text. I no longer use vim-sandwich, as
-  # it seems a bit unmaintained at the moment.
+  # it seems a bit unmaintained at the moment - I use mini.surround instead.
   #  - sa'    - Surround Add single quotes
   #  - sr'"   - Surround Replace single quotes with double quotes
   #  - sd'    - Surround Delete single quotes
