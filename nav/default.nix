@@ -1,11 +1,12 @@
 { lib, ... }: {
 
   imports = [
-    # ./tree-climber.nix
+    ./treewalker.nix
     ./aerial.nix
   ];
 
   # <https://github.com/nvim-tree/nvim-tree.lua ⭐️8.1k 💾1.6k>
+  # A file explorer tree for neovim written in lua
   plugins.nvim-tree = {
     enable = false;
   };

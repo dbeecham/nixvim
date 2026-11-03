@@ -1,10 +1,15 @@
-{ lib, pkgs, ... }: {
-
-  # <https://github.com/drybalka/tree-climber.nvim>
-
-  # extraPlugins = [
-  #   pkgs.vimPlugins.tree-climber-nvim
-  # ];
+{ pkgs, ... }: {
+  # <https://github.com/aaronik/treewalker.nvim>
+  extraPlugins = [
+    (pkgs.vimPlugins.treewalker-nvim.overrideAttrs (old: {
+      src = pkgs.fetchFromGitHub {
+        owner = "aaronik";
+        repo = "treewalker.nvim";
+        rev = "8057fb6a0eca8e6e303086a9d1b989617035dffb";
+        sha256 = "sha256-skbXrRrRLPEXkv4LmQNJ8qhTKJvG/z/dndADVoLwKjM=";
+      };
+    }))
+  ];
 
   # keymaps = [
   #
@@ -68,4 +73,5 @@
   #   }
   #
   # ];
+
 }
